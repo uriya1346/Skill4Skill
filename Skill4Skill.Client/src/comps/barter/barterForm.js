@@ -1,4 +1,3 @@
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import React, { useEffect, useState, useRef } from "react";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
@@ -6,16 +5,17 @@ import AuthClientComp from "../users_comps/authClientComp";
 import { useNavigate } from "react-router-dom";
 import { Tab, Nav } from "react-bootstrap";
 import "../css/barterForm.css";
+import { Slider } from "@mui/material";
 
 function BarterForm(props) {
   const [ar, setAr] = useState([]);
   const [user, setUser] = useState({});
   const [listOption, setListOption] = useState([]);
   const [listInterestedOption, setListInterestedOption] = useState([]);
+  const [level, setLevel] = useState(3);
   const nav = useNavigate();
   let inputCatRef = useRef();
   let inputSubCatRef = useRef();
-  let inputDescriptionRef = useRef();
   let inputCatInterestedRef = useRef();
   let inputSubCatInterestedRef = useRef();
   let inputDescriptionInterestedRef = useRef();
@@ -53,10 +53,14 @@ function BarterForm(props) {
     setListInterestedOption(resp.data);
   };
 
-  const addKnowledge = async () => {
+  const addKnowledge = async (e) => {
+    e.preventDefault();
     let inputCat = inputCatRef.current.value;
-    let inputDescription = inputDescriptionRef.current.value;
-    let inputSubCat = inputSubCatRef.current.value;
+    let inputSubCat = inputSubCatRef?.current?.value;
+    if (inputSubCat === undefined) {
+      toast.warning("Please fill in all fields");
+      return;
+    }
     let place = inputCat.indexOf("*");
     let catNumber = inputCat.slice(0, place);
     let place2 = user.knowledge.findIndex((obj) => obj.subCat === inputSubCat);
@@ -64,14 +68,7 @@ function BarterForm(props) {
       toast.warning("this skill already exist");
       return;
     }
-    nav(
-      "/barterForm/testSkill" +
-        inputSubCat +
-        "*" +
-        catNumber +
-        "*" +
-        inputDescription
-    );
+    nav("/barterForm/testSkill" + inputSubCat + "*" + catNumber + "*" + level);
   };
   const addInterested = async (event) => {
     event.preventDefault();
@@ -222,20 +219,111 @@ function BarterForm(props) {
 
           <Tab.Content>
             <Tab.Pane eventKey="knowledge">
-              <h2 className="text-center">
-                <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
-                Knowledge
-              </h2>
-              {user?.knowledge
-                ? user.knowledge
-                    .sort((a, b) => b.subCat.length - a.subCat.length)
-                    .map((item) => {
-                      return (
+              <div className="d-flex flex-column align-items-center">
+                <h2 className="text-center">
+                  <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
+                  Knowledge
+                </h2>
+                <div className="d-flex flex-column flex-md-row mb-5 justify-content-center align-items-center">
+                  <div className="mx-2 text-center">
+                    <select
+                      className="form-select color-black me-4"
+                      onChange={getList}
+                      ref={inputCatRef}
+                      required
+                    >
+                      <option key="1">Choose Category</option>
+                      {ar.map((item) => {
+                        return (
+                          <option
+                            value={item.short_id + "*" + item.name}
+                            key={item._id}
+                          >
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="mx-2 mt-3 mt-md-0 text-center">
+                    {listOption.length === 0 ? (
+                      <select className="form-select color-black me-4">
+                        <option>Choose Subject</option>
+                      </select>
+                    ) : (
+                      <select
+                        className="form-select me-4"
+                        ref={inputSubCatRef}
+                        required
+                      >
+                        {listOption.map((item) => {
+                          return (
+                            <option value={item.name} key={item._id}>
+                              {item.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    )}
+                  </div>
+                  <div
+                    className="mx-2 d-flex justify-content-center align-items-center"
+                    style={{ width: "26vw" }}
+                  >
+                    <span className="me-2">Level</span>
+                    <Slider
+                      defaultValue={3}
+                      valueLabelDisplay="auto"
+                      step={1}
+                      marks
+                      min={1}
+                      max={10}
+                      onChange={(event, newValue) => {
+                        setLevel(newValue);
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-dark ms-2"
+                      onClick={addKnowledge}
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                {user?.knowledge ? (
+                  <div className="d-flex flex-column align-items-center">
+                    {user.knowledge
+                      .sort((a, b) => b.subCat.length - a.subCat.length)
+                      .map((item) => (
                         <div
-                          key={item.id}
-                          className="d-flex justify-content-center my-1"
+                          className="d-flex align-items-center"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            marginBottom: "10px",
+                            justifyContent: "space-between",
+                          }}
                         >
-                          <p>{item.subCat}</p>
+                          <p
+                            className="me-3"
+                            style={{ width: "30%", marginRight: "2%" }}
+                          >
+                            {item.subCat}
+                          </p>
+                          <div style={{ width: "68%" }}>
+                            <Slider
+                              defaultValue={+item.level}
+                              step={1}
+                              marks
+                              min={1}
+                              max={10}
+                              disabled
+                              color="secondary"
+                            />
+                          </div>
+                          <div className="ms-3">
                           <button
                             onClick={() => deleteKnowledge(item.id)}
                             className="text-danger badge text-center mx-2 btnLog align-self-baseline"
@@ -248,165 +336,107 @@ function BarterForm(props) {
                             <i className="fa fa-trash" aria-hidden="true"></i>
                           </button>
                         </div>
-                      );
-                    })
-                : ""}
-              <label className="mb-1">
-                <i className="fa fa-sort mx-2" aria-hidden="true"></i>Category
-              </label>
-              <div className="d-flex mb-5">
-                <div className="mx-2 text-center">
-                  <select
-                    className="form-select color-black me-4"
-                    onChange={getList}
-                    ref={inputCatRef}
-                  >
-                    <option key="1">Chooce Category</option>
-                    {ar.map((item) => {
-                      return (
-                        <option
-                          value={item.short_id + "*" + item.name}
-                          key={item._id}
-                        >
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <div className="d-flex justify-content-center">
-                  {listOption.length === 0 ? (
-                    <div>
-                      <select className="form-select color-black me-4">
-                        <option>Chooce Category</option>
-                      </select>
-                    </div>
-                  ) : (
-                    <div>
-                      <select
-                        className="form-select color-black me-4"
-                        ref={inputSubCatRef}
-                      >
-                        {listOption.map((item) => {
-                          return (
-                            <option value={item.name} key={item._id}>
-                              {item.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  )}
-                  <div className="mx-2">
-                    <textarea
-                      ref={inputDescriptionRef}
-                      className="form-control"
-                      type="text"
-                      placeholder="Description..."
-                      style={{ height: "0px" }}
-                    />
+                        </div>
+                      ))}
                   </div>
-                </div>
-                <div>
-                  <button className="btn btn-dark mx-2" onClick={addKnowledge}>
-                    Add
-                  </button>
-                </div>
+                ) : null}
               </div>
             </Tab.Pane>
 
             <Tab.Pane eventKey="interested">
-              <h2 className="text-center">
-                <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
-                Interested in learning
-              </h2>
-              {user?.interested
-                ? user.interested
-                .sort((a, b) => b.subCat.length - a.subCat.length)
-                .map((item) => {
-                  return (
-                    <div
-                      key={item.id}
-                      className="d-flex justify-content-center my-1"
-                    >
-                      <p>{item.subCat}</p>
-                      <button
-                        onClick={() => deleteInterested(item.id)}
-                        className="text-danger badge text-center mx-2 btnLog align-self-baseline"
-                        style={{
-                          width: "42px",
-                          padding: "5px 6px 8px 5px",
-                          marginTop: 0,
-                        }}
-                      >
-                        <i className="fa fa-trash" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  );
-                })
-                : ""}
-              <label className="mb-1">
-                <i className="fa fa-sort mx-2" aria-hidden="true"></i>Category
-              </label>
-              <div className="d-flex mb-5">
-                <div className="mx-2">
-                  <select
-                    className="form-select color-black me-4"
-                    onChange={getListInterested}
-                    ref={inputCatInterestedRef}
-                  >
-                    <option key="1">Chooce Category</option>
-                    {ar.map((item) => {
-                      return (
-                        <option
-                          value={item.short_id + "*" + item.name}
-                          key={item._id}
-                        >
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <div className="d-flex justify-content-center">
-                  {listInterestedOption.length == 0 ? (
-                    <div>
-                      <select className="form-select color-black me-4">
-                        <option>Chooce Category</option>
-                      </select>
-                    </div>
-                  ) : (
-                    <div>
-                      <select
-                        className="form-select color-black me-4"
-                        ref={inputSubCatInterestedRef}
-                      >
-                        {listInterestedOption.map((item) => {
-                          return (
-                            <option value={item.name} key={item._id}>
-                              {item.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  )}
+              <div className="d-flex flex-column align-items-center">
+                <h2 className="text-center">
+                  <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
+                  Interested in learning
+                </h2>
+                <div className="d-flex mb-5 justify-content-center align-items-center">
                   <div className="mx-2">
-                    <textarea
-                      ref={inputDescriptionInterestedRef}
-                      className="form-control"
-                      type="text"
-                      placeholder="Description..."
-                      style={{ height: "0px" }}
-                    />
+                    <select
+                      className="form-select color-black me-4"
+                      onChange={getListInterested}
+                      ref={inputCatInterestedRef}
+                    >
+                      <option key="1">Choose Category</option>
+                      {ar.map((item) => {
+                        return (
+                          <option
+                            value={item.short_id + "*" + item.name}
+                            key={item._id}
+                          >
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="d-flex justify-content-center">
+                    {listInterestedOption.length === 0 ? (
+                      <div>
+                        <select className="form-select color-black me-4">
+                          <option>Choose Subject</option>
+                        </select>
+                      </div>
+                    ) : (
+                      <div>
+                        <select
+                          className="form-select color-black me-4"
+                          ref={inputSubCatInterestedRef}
+                        >
+                          {listInterestedOption.map((item) => {
+                            return (
+                              <option value={item.name} key={item._id}>
+                                {item.name}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    )}
+                    <div className="mx-2">
+                      <textarea
+                        ref={inputDescriptionInterestedRef}
+                        className="form-control"
+                        type="text"
+                        placeholder="Description..."
+                        style={{ height: "0px" }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-dark mx-2"
+                      onClick={addInterested}
+                    >
+                      Add
+                    </button>
                   </div>
                 </div>
-                <div>
-                  <button className="btn btn-dark mx-2" onClick={addInterested}>
-                    Add
-                  </button>
-                </div>
               </div>
+              {user?.interested
+                ? user.interested
+                    .sort((a, b) => b.subCat.length - a.subCat.length)
+                    .map((item) => {
+                      return (
+                        <div
+                          key={item.id}
+                          className="d-flex justify-content-center my-1"
+                        >
+                          <p>{item.subCat}</p>
+                          <button
+                            onClick={() => deleteInterested(item.id)}
+                            className="text-danger badge text-center mx-2 btnLog align-self-baseline"
+                            style={{
+                              width: "42px",
+                              padding: "5px 6px 8px 5px",
+                              marginTop: 0,
+                            }}
+                          >
+                            <i className="fa fa-trash" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      );
+                    })
+                : null}
             </Tab.Pane>
             <Tab.Pane eventKey="learningMode">
               <div className="d-flex flex-column align-items-center mb-3">
