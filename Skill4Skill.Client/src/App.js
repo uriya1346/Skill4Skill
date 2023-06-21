@@ -9,5 +9,4 @@ function App() {
       </React.Fragment>
   );
 }
-//testBranch2
 export default App;
