@@ -6,6 +6,7 @@ import AuthClientComp from "../users_comps/authClientComp";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+//fddgfdgfdg
 
 function TestSkill(props) {
   const params = useParams();
