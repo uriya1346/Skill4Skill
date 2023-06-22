@@ -14,7 +14,7 @@ function TestSkill(props) {
   const [flag, setFlag] = useState(false);
   const { register, handleSubmit } = useForm();
   const [user, setUser] = useState({});
-  const [level, setLevel] = useState(0);
+  const [catName, setCatName] = useState({});
   const nav = useNavigate();
 
   useEffect(() => {
@@ -25,13 +25,17 @@ function TestSkill(props) {
     try {
       const parts = params.data.split("*");
       const inputSubCat = parts[0];
+      const catNumber = parts[1];
       const levelParam = parts[2];
       setSubjectName(inputSubCat);
-      setLevel(+levelParam);
+      let urlCat = API_URL + "/categoriesGroup/singleNumber/"+catNumber;
+      let resp = await doApiGet(urlCat);
+      let categoryName = resp.data.name
+      setCatName(categoryName)
       let questionsNum = +levelParam;
       let url = API_URL + "/openai/chat";
       let body = {
-        message: `build me ${questionsNum} questions at a difficulty level ${questionsNum} out of 10 about ${inputSubCat}, you can also ask questions with code and ask what the output will be. every questions get 3 options answer that just 1 answer its true i want this in json. json example: {"questions": [
+        message: `build me ${questionsNum} questions at a difficulty level ${questionsNum} out of 10 about ${catName} - ${inputSubCat}, you can also ask questions with code and ask what the output will be. every questions get 3 options answer that just 1 answer its true i want this in json. json example: {"questions": [
             {
               "question": "question",
               "options": [
@@ -118,15 +122,15 @@ function TestSkill(props) {
           onSubmit={handleSubmit(onSubForm)}
           className="col-md-8 p-3 shadow mx-auto h4 form-design text-dark"
         >
-          <h1 className="gradi text-center my-5">
+          <h2 className="gradi text-center my-5">
             <i className="fa fa-lastfm me-4 mb-2" aria-hidden="true"></i>
-            {subjectName} Test Skill
-          </h1>
+            <strong>{catName}</strong> - {subjectName}
+          </h2>
 
           {questions.questions.map((item, key) => {
             return (
-              <div className="my-5" key={key}>
-                <label className="mb-1">
+              <div className="my-5 text-center mb-3" key={key}>
+                <label className="mb-3">
                   {item.question}
                 </label>
                 <div className="mx-2">

@@ -5,7 +5,7 @@ import AuthClientComp from "../users_comps/authClientComp";
 import { useNavigate } from "react-router-dom";
 import { Tab, Nav } from "react-bootstrap";
 import "../css/barterForm.css";
-import { Slider } from "@mui/material";
+import { IconButton, Slider } from "@mui/material";
 
 function BarterForm(props) {
   const [ar, setAr] = useState([]);
@@ -18,7 +18,6 @@ function BarterForm(props) {
   let inputSubCatRef = useRef();
   let inputCatInterestedRef = useRef();
   let inputSubCatInterestedRef = useRef();
-  let inputDescriptionInterestedRef = useRef();
 
   useEffect(() => {
     doApi();
@@ -74,7 +73,6 @@ function BarterForm(props) {
     event.preventDefault();
     let obj = {};
     let inputCat = inputCatInterestedRef.current.value;
-    let inputDescription = inputDescriptionInterestedRef.current.value;
     let inputSubCat = inputSubCatInterestedRef.current.value;
     let place = inputCat.indexOf("*");
     let catNumber = inputCat.slice(0, place);
@@ -90,7 +88,6 @@ function BarterForm(props) {
     }
     obj["catNum"] = catNumber;
     obj["subCat"] = inputSubCat;
-    obj["description"] = inputDescription;
     obj["id"] = Math.floor(Math.random() * 9999999);
     let tempUser = { ...user };
     tempUser.interested.push(obj);
@@ -224,7 +221,7 @@ function BarterForm(props) {
                   <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
                   Knowledge
                 </h2>
-                <div className="d-flex flex-column flex-md-row mb-5 justify-content-center align-items-center">
+                <div className="d-flex flex-column flex-md-row  mb-5 justify-content-center align-items-center w-75">
                   <div className="mx-2 text-center">
                     <select
                       className="form-select color-black me-4"
@@ -293,11 +290,12 @@ function BarterForm(props) {
                   </div>
                 </div>
                 {user?.knowledge ? (
-                  <div className="d-flex flex-column align-items-center">
+                  <div className="d-flex flex-column align-items-center w-75">
                     {user.knowledge
                       .sort((a, b) => b.subCat.length - a.subCat.length)
-                      .map((item) => (
+                      .map((item, key) => (
                         <div
+                          key={key}
                           className="d-flex align-items-center"
                           style={{
                             width: "100%",
@@ -307,8 +305,8 @@ function BarterForm(props) {
                           }}
                         >
                           <p
-                            className="me-3"
-                            style={{ width: "30%", marginRight: "2%" }}
+                            className="col-8 col-sm-12"
+                            style={{ width: "30%" }}
                           >
                             {item.subCat}
                           </p>
@@ -324,18 +322,19 @@ function BarterForm(props) {
                             />
                           </div>
                           <div className="ms-3">
-                          <button
-                            onClick={() => deleteKnowledge(item.id)}
-                            className="text-danger badge text-center mx-2 btnLog align-self-baseline"
-                            style={{
-                              width: "42px",
-                              padding: "5px 6px 8px 5px",
-                              marginTop: 0,
-                            }}
-                          >
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                          </button>
-                        </div>
+                            <IconButton
+                              aria-label="delete"
+                              onClick={() => deleteKnowledge(item.id)}
+                              className="text-danger badge text-center mx-2 btnLog align-self-baseline"
+                              style={{
+                                width: "42px",
+                                padding: "5px 6px 8px 5px",
+                                marginTop: 0,
+                              }}
+                            >
+                              <i className="fa fa-trash" aria-hidden="true"></i>
+                            </IconButton>
+                          </div>
                         </div>
                       ))}
                   </div>
@@ -392,15 +391,6 @@ function BarterForm(props) {
                         </select>
                       </div>
                     )}
-                    <div className="mx-2">
-                      <textarea
-                        ref={inputDescriptionInterestedRef}
-                        className="form-control"
-                        type="text"
-                        placeholder="Description..."
-                        style={{ height: "0px" }}
-                      />
-                    </div>
                   </div>
                   <div>
                     <button
@@ -422,7 +412,7 @@ function BarterForm(props) {
                           className="d-flex justify-content-center my-1"
                         >
                           <p>{item.subCat}</p>
-                          <button
+                          <IconButton
                             onClick={() => deleteInterested(item.id)}
                             className="text-danger badge text-center mx-2 btnLog align-self-baseline"
                             style={{
@@ -432,7 +422,7 @@ function BarterForm(props) {
                             }}
                           >
                             <i className="fa fa-trash" aria-hidden="true"></i>
-                          </button>
+                          </IconButton>
                         </div>
                       );
                     })
