@@ -217,11 +217,11 @@ function BarterForm(props) {
           <Tab.Content>
             <Tab.Pane eventKey="knowledge">
               <div className="d-flex flex-column align-items-center">
-                <h2 className="text-center">
+                <h2 className="text-center my-3">
                   <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
-                  Knowledge
+                  My Skills
                 </h2>
-                <div className="d-flex flex-column flex-md-row  mb-5 justify-content-center align-items-center w-75">
+                <div className="d-flex flex-column flex-md-row justify-content-center align-items-center w-75">
                   <div className="mx-2 text-center">
                     <select
                       className="form-select color-black me-4"
@@ -289,6 +289,12 @@ function BarterForm(props) {
                     </button>
                   </div>
                 </div>
+                <p
+                  className="text-info mb-5 fs-6 mt-1"
+                >
+                  *To add a new skill you will pass a test that will test your
+                  level of knowledge
+                </p>
                 {user?.knowledge ? (
                   <div className="d-flex flex-column align-items-center w-75">
                     {user.knowledge
@@ -344,9 +350,9 @@ function BarterForm(props) {
 
             <Tab.Pane eventKey="interested">
               <div className="d-flex flex-column align-items-center">
-                <h2 className="text-center">
+                <h2 className="text-center my-3">
                   <i className="fa fa-lastfm me-4" aria-hidden="true"></i>
-                  Interested in learning
+                  Skills I would like
                 </h2>
                 <div className="d-flex mb-5 justify-content-center align-items-center">
                   <div className="mx-2">

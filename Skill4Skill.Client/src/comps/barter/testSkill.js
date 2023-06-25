@@ -126,7 +126,6 @@ function TestSkill(props) {
             <i className="fa fa-lastfm me-4 mb-2" aria-hidden="true"></i>
             <strong>{catName}</strong> - {subjectName}
           </h2>
-
           {questions.questions.map((item, key) => {
             return (
               <div className="my-5 text-center mb-3" key={key}>

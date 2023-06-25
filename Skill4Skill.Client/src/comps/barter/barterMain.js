@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 function BarterMain(props) {
   const [ar, setAr] = useState([]);
+  const [loadingFlag, setLoadingFlag] = useState(false);
   const [suggestionsAr, setSuggestionsAr] = useState([]);
   useEffect(() => {
     doApi();
@@ -48,7 +49,10 @@ function BarterMain(props) {
     setAr(array);
     let url2 = API_URL + "/barter/suggestions";
     let resp2 = await doApiGet(url2);
-    setSuggestionsAr(resp2.data);
+    console.log(resp2.data);
+    
+    // setSuggestionsAr(resp2.data);
+    setLoadingFlag(true)
   };
 
   return (
@@ -72,17 +76,17 @@ function BarterMain(props) {
           <i className="fa fa-lastfm me-4 mb-4" aria-hidden="true"></i>
           suggestions for you
         </h2>
-        <div className="row">
-          {suggestionsAr.map((item, index) => {
-            return <Suggestions key={index} item={item} />;
-          })}
-        </div>
-        {ar.length === 0 ? (
+
+        {!loadingFlag ? (
           <div className="text-center mt-4">
             <BeatLoader />
           </div>
         ) : (
-          ""
+          <div className="row">
+          {suggestionsAr.map((item, index) => {
+            return <Suggestions key={index} item={item} />;
+          })}
+        </div>
         )}
       </div>
       <div style={{ minHeight: "35vh" }}></div>

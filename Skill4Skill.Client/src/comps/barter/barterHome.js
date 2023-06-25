@@ -1,17 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
-import { BeatLoader } from "react-spinners";
 import AuthClientComp from "../users_comps/authClientComp";
 import BarterMain from "./barterMain"
 
 
 function RentalCat(props) {
-  const [ar, setAr] = useState({});
   const [interestedAr, setInterestedAr] = useState([]);
-  const [flag, setFlag] = useState(true);
-  let inputRef = useRef();
-  let nav = useNavigate();
 
   useEffect(() => {
     doApi();
@@ -20,7 +15,6 @@ function RentalCat(props) {
   const doApi = async () => {
     let url = API_URL + "/users/myInfo";
     let resp = await doApiGet(url);
-    setAr(resp.data);
     setInterestedAr(resp.data.interested);
   };
 
