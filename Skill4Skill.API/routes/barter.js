@@ -86,7 +86,7 @@ router.get("/suggestions", auth, async (req, res) => {
       myUserShortJson
     )}, find potential users ${JSON.stringify(
       usersShortJson
-    )} for knowledge exchange. Return a clean JSON with each match containing 'id' of the user, and 'match' field detailing the knowledge exchange and reason. Exclude users with no matches.`;
+    )} for knowledge exchange. Return a clean JSON with each match containing 'id' of the user, and 'match' field detailing the knowledge exchange and reason. Exclude users with no matches. json example [{id:"123",match:""}]`;
 
     console.log(message);
 

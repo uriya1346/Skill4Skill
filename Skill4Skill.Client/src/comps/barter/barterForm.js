@@ -21,7 +21,7 @@ function BarterForm(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  });
 
   const doApi = async () => {
     let url = API_URL + "/categoriesGroup";
@@ -63,7 +63,7 @@ function BarterForm(props) {
     let place = inputCat.indexOf("*");
     let catNumber = inputCat.slice(0, place);
     let place2 = user.knowledge.findIndex((obj) => obj.subCat === inputSubCat);
-    if (place2 != -1) {
+    if (place2 !== -1) {
       toast.warning("this skill already exist");
       return;
     }
@@ -77,12 +77,12 @@ function BarterForm(props) {
     let place = inputCat.indexOf("*");
     let catNumber = inputCat.slice(0, place);
     let place2 = user.interested.findIndex((obj) => obj.subCat === inputSubCat);
-    if (place2 != -1) {
+    if (place2 !== -1) {
       toast.warning("this skill already exist");
       return;
     }
     let place3 = user.knowledge.findIndex((obj) => obj.subCat === inputSubCat);
-    if (place3 != -1) {
+    if (place3 !== -1) {
       toast.warning("You know the knowledge you are interested in learning");
       return;
     }

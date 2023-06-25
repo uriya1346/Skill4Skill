@@ -19,7 +19,7 @@ function TestSkill(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  });
 
   const doApi = async () => {
     try {

@@ -24,7 +24,7 @@ function RentalCat(props) {
     <div className="container-fluid mb-5">
       <AuthClientComp />
       <div style={{ minHeight: "13vh" }}></div>
-      {interestedAr.length == 0 ? 
+      {interestedAr.length === 0 ? 
         <div className="text-center h1" style={{ marginTop: "30vh" }}>
           You must fill out an information form
           <br/>
