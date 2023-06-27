@@ -1,50 +1,59 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Layouts and General Components
 import LayoutClient from "./comps/general_comps/layoutClient";
 import LayoutAdmin from "./comps_admin/general_admin/layoutAdmin";
+import Page404 from "./comps/general_comps/page404";
+import Contact from "./comps/general_comps/contact";
+import Home from "./comps/general_comps/home";
+import AboutUs from "./comps/general_comps/aboutUs";
+
+// Admin Components
 import LoginAdmin from "./comps_admin/general_admin/loginAdmin";
 import AdminHome from "./comps_admin/general_admin/home";
-//groups
 import LearningGroupsCatAdmin from "./comps_admin/learningGroups_admin/learningGroupsCatList";
-import GroupSearch from "./comps/group_comps/searchGroup";
 import EditGroupsCatAdmin from "./comps_admin/learningGroups_admin/editCategoryGroups";
 import GroupAdninList from "./comps_admin/learningGroups_admin/groupsAdminList";
 import EditGroupsAdmin from "./comps_admin/learningGroups_admin/editProductGroup";
 import AddGroupCat from "./comps_admin/learningGroups_admin/addGroupCategory";
 import AddGroupProduct from "./comps_admin/learningGroups_admin/addGroupProduct";
 import LogoutAdmin from "./comps_admin/general_admin/logoutAdmin";
+import UsersList from "./comps_admin/general_admin/usersList";
+
+// User Components
 import SignUpClient from "./comps/users_comps/signupClient";
 import LogInClient from "./comps/users_comps/loginClient";
 import LogoutClient from "./comps/users_comps/logoutClient";
-import Page404 from "./comps/general_comps/page404";
-import "react-toastify/dist/ReactToastify.css";
-import Contact from "./comps/general_comps/contact";
-import GroupListPage from "./comps/group_comps/groupListPage ";
-import GroupInfo from "./comps/group_comps/groupInfo ";
-import Home from "./comps/general_comps/home";
-import UsersList from "./comps_admin/general_admin/usersList";
-import GroupCategories from "./comps/group_comps/groupCategories";
 import UserInfo from "./comps/users_comps/userInfo";
-import BarterHome from "./comps/barter/barterHome";
-import BarterForm from "./comps/barter/barterForm";
-import BarterCardInfo from "./comps/barter/barterCardInfo";
 import Cart from "./comps/users_comps/cart";
-import AboutUs from "./comps/general_comps/aboutUs";
-//checkout
-import CheckoutPremium from "./comps/checkout/checkoutPremium";
-//maps
-import BarterMap from "./comps/barterMap/barterMap";
-//users
 import ForgotPassword from "./comps/users_comps/forgotPassword";
-//chat
-import ChatMain from "./comps/chat/listMessage";
-//new group
+
+// Group Components
+import GroupSearch from "./comps/group_comps/searchGroup";
+import GroupListPage from "./comps/group_comps/groupListPage";
+import GroupInfo from "./comps/group_comps/groupInfo";
+import GroupCategories from "./comps/group_comps/groupCategories";
 //import NewGroup from "./comps/group_comps/newGroup";
 import LearningPath from "./comps/group_comps/learningPath";
 import WaysLearning from "./comps/group_comps/waysLearning";
-//barter
+
+// Barter Components
+import BarterHome from "./comps/barter/barterHome";
+import BarterForm from "./comps/barter/barterForm";
+import BarterCardInfo from "./comps/barter/barterCardInfo";
 import TestSkill from "./comps/barter/testSkill";
+
+// Map Components
+import BarterMap from "./comps/barterMap/barterMap";
+
+// Chat Components
+import ChatMain from "./comps/chat/listMessage";
+
+// Checkout Components
+import CheckoutPremium from "./comps/checkout/checkoutPremium";
 function AppRoute(props) {
   return (
     <Router>
