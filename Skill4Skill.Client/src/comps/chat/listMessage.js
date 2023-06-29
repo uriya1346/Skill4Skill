@@ -8,10 +8,8 @@ import "./../css/chat.css";
 
 
 const socket = socketIOClient(API_URL);
-const history = History
 function ListMessage() {
   const params = useParams();
-  const [style, setStyle] = useState("flex");
   const [id] = useState(params.id);
   const [arChat, setArChat] = useState([]);
   const [userObj, setUserObj] = useState({});
@@ -27,12 +25,12 @@ function ListMessage() {
   useEffect(() => {
     socket.on("nodeJsEvent", handleIncomingMessage);
     return () => socket.off("nodeJsEvent", handleIncomingMessage);
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     doApiUserObj();
     doApi();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     const url = `${API_URL}/chat/userMessage/${id}`;
@@ -112,11 +110,11 @@ function ListMessage() {
     } else {
       scrollToBottom();
     }
-  }, []);
+  },[]);
 
   return (
     <div className="">
-      <div className="listMessage p-2" style={{ display: style }}>
+      <div className="listMessage p-2" style={{ display: "flex" }}>
         <div className="messageitem p-2 my-4 pb-4">
           <button
             onClick={() => {

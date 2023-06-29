@@ -16,7 +16,7 @@ function AddGroupProduct(props) {
 
   useEffect(() => {
     doApi()
-  }, [])
+  },[])
 
 
   const doApi = async () => {

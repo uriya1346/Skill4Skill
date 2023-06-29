@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiMethod } from "../../services/apiService";
 import { BeatLoader } from "react-spinners";
 
-function RentalCarInfo(props) {
+function WaysLearning(props) {
   let params = useParams();
   const [ways, setWays] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -12,7 +12,7 @@ function RentalCarInfo(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  },[]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     try {
@@ -116,4 +116,4 @@ function RentalCarInfo(props) {
     );
 }
 
-export default RentalCarInfo;
+export default WaysLearning;

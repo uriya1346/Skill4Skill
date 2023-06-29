@@ -22,7 +22,7 @@ function AddRentalProduct(props) {
   useEffect(() => {
     doYear()
     doApi()
-  }, [])
+  },[])
 
   const doYear = () => { 
     let yearsar=[];

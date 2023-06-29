@@ -16,8 +16,7 @@ function MyConnections(props) {
   const nav = useNavigate();
   let {
     register,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit
   } = useForm();
   let reviewerContentRef = register("reviewerContent", {
     required: true,
@@ -26,7 +25,7 @@ function MyConnections(props) {
 
   useEffect(() => {
     doApi();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/users/single/" + item.id;
@@ -100,7 +99,6 @@ function MyConnections(props) {
                 <TextField
                   {...reviewerContentRef}
                   style={{
-                    margin: 0,
                     display: "flex",
                     margin: "0 40px 0 40px",
                   }}

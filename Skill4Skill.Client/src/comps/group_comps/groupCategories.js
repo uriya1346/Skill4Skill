@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { BeatLoader } from "react-spinners";
 import GroupCatItem from "./groupCatItem";
@@ -11,7 +11,7 @@ function RentalCat(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  },[]);
 
   const doApi = async () => {
     let url = API_URL + "/categoriesGroup";
@@ -70,7 +70,6 @@ function RentalCat(props) {
             <div />
           </div>
         </div>
-        {/* <VehiclesRental/> */}
       </div>
     </div>
   );

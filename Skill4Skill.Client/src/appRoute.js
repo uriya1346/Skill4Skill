@@ -60,48 +60,72 @@ function AppRoute(props) {
       <Routes>
         {/* for ADMIN USER */}
         <Route path="/admin" element={<LayoutAdmin />}>
-          <Route index element={<LoginAdmin />}/>
-          <Route path="/admin/home" element={<AdminHome />}/>
-          <Route path="/admin/users" element={<UsersList />}/>
-          <Route path="/admin/logout" element={<LogoutAdmin />}/>
+          <Route index element={<LoginAdmin />} />
+          <Route path="/admin/home" element={<AdminHome />} />
+          <Route path="/admin/logout" element={<LogoutAdmin />} />
+          <Route path="/admin/users" element={<UsersList />} />
           {/* learning groups admin*/}
-          <Route path="/admin/learningGroups" element={<LearningGroupsCatAdmin />}/>
-          <Route path="/admin/learningGroups/:url_name" element={<EditGroupsCatAdmin />}/>
-          <Route path="/admin/groupsList/:cat_url" element={<GroupAdninList />}/>
-          <Route path="/admin/editProductGroups/:id" element={<EditGroupsAdmin />}/>
-          <Route path="/admin/addGroupCat" element={<AddGroupCat />}/>
-          <Route path="/admin/addGroupProduct" element={<AddGroupProduct />}/>
+          <Route
+            path="/admin/learningGroups"
+            element={<LearningGroupsCatAdmin />}
+          />
+          <Route
+            path="/admin/learningGroups/:url_name"
+            element={<EditGroupsCatAdmin />}
+          />
+          <Route
+            path="/admin/groupsList/:cat_url"
+            element={<GroupAdninList />}
+          />
+          <Route
+            path="/admin/editProductGroups/:id"
+            element={<EditGroupsAdmin />}
+          />
+          <Route path="/admin/addGroupCat" element={<AddGroupCat />} />
+          <Route path="/admin/addGroupProduct" element={<AddGroupProduct />} />
         </Route>
+
         {/* for REGULAR USER */}
         <Route path="/" element={<LayoutClient />}>
           {/* USER script */}
           <Route index element={<Home />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/login" element={<LogInClient />} />
           <Route path="/login/forgotPassword" element={<ForgotPassword />} />
           <Route path="/signup" element={<SignUpClient />} />
           <Route path="/logout" element={<LogoutClient />} />
           <Route path="/userInfo" element={<UserInfo />} />
-          <Route path="/cart" element={<Cart/>} />
-          <Route path="/aboutUs" element={<AboutUs/>} />
+          <Route path="/cart" element={<Cart />} />
+
           {/* GROUP script */}
-          <Route path="/groupCat" element={<GroupCategories/> }  />
-          <Route path="/group/:cat_url" element={<GroupListPage/>}  />
-          <Route path="/groupInfo/:id" element={<GroupInfo/>}  />
-          <Route path="/groupSearch/" element={<GroupSearch />}  />
-          <Route path="/groupInfo/learningPath:subject" element={<LearningPath />}  />
-          <Route path="/groupInfo/waysLearning:subject" element={<WaysLearning />}  />
+          <Route path="/groupCat" element={<GroupCategories />} />
+          <Route path="/group/:cat_url" element={<GroupListPage />} />
+          <Route path="/groupInfo/:id" element={<GroupInfo />} />
+          <Route path="/groupSearch/" element={<GroupSearch />} />
+          <Route
+            path="/groupInfo/learningPath:subject"
+            element={<LearningPath />}
+          />
+          <Route
+            path="/groupInfo/waysLearning:subject"
+            element={<WaysLearning />}
+          />
+
           {/* BARTER script */}
-          <Route path="/barter" element={<BarterHome/>}  />
-          <Route path="/barterForm" element={<BarterForm/>}  />
-          <Route path="/barterForm/testSkill:data" element={<TestSkill/>}  />
-          <Route path="/barter/cardInfo" element={<BarterCardInfo/>}  />
+          <Route path="/barter" element={<BarterHome />} />
+          <Route path="/barterForm" element={<BarterForm />} />
+          <Route path="/barterForm/testSkill:data" element={<TestSkill />} />
+          <Route path="/barter/cardInfo" element={<BarterCardInfo />} />
+
           {/* CHECKOUT script */}
-          <Route path="/checkoutPremium" element={<CheckoutPremium />}  />
+          <Route path="/checkoutPremium" element={<CheckoutPremium />} />
+
           {/* MAPS script */}
-          <Route path="/barterMap" element={<BarterMap />}  />
+          <Route path="/barterMap" element={<BarterMap />} />
+
           {/* CHAT script */}
-          <Route path="/chat:id" element={<ChatMain />}  />
+          <Route path="/chat:id" element={<ChatMain />} />
 
           {/* ERROR 404 */}
           <Route path="/*" element={<Page404 />} />

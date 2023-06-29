@@ -51,7 +51,7 @@ function BarterMain(props) {
     let resp2 = await doApiGet(url2);
     console.log(resp2.data);
     
-    // setSuggestionsAr(resp2.data);
+    setSuggestionsAr(resp2.data);
     setLoadingFlag(true)
   };
 

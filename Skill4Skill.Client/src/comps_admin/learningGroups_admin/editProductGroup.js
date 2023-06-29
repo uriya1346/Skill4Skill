@@ -7,7 +7,6 @@ import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import { BeatLoader } from "react-spinners";
 
 function EditProductGroup(props) {
-  let [year, setYear] = useState([]);
   let [cat_ar, setCatAr] = useState([]);
   let [product, setProduct] = useState({});
   let params = useParams();
@@ -41,7 +40,7 @@ function EditProductGroup(props) {
 
   useEffect(() => {
     doApi();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   const doApi = async () => {

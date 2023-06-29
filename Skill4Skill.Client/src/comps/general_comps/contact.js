@@ -3,10 +3,17 @@ import "../css/contact.css";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function Contact(props) {
   const form = useRef();
   const nav = useNavigate();
+  const boxVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const delay = 0.15;
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -30,8 +37,12 @@ function Contact(props) {
   };
 
   return (
-    <div className="contact-page">
-      <div style={{minHeight: "5vh"}}></div>
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="contact-page"
+    >
+      <div style={{ minHeight: "5vh" }}></div>
       <section className="contact">
         <div className="content">
           <h3>
@@ -49,7 +60,13 @@ function Contact(props) {
         </div>
         <div className="containerd">
           <div className="contactInfo">
-            <div className="box">
+            <motion.div
+              className="box"
+              variants={boxVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: delay }}
+            >
               <div className="icon">
                 <i className="fa fa-map-marker" aria-hidden="true"></i>
               </div>
@@ -63,8 +80,15 @@ function Contact(props) {
                   5060
                 </p>
               </div>
-            </div>
-            <div className="box">
+            </motion.div>
+
+            <motion.div
+              className="box"
+              variants={boxVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: delay * 2 }}
+            >
               <div className="icon">
                 <i className="fa fa-phone" aria-hidden="true"></i>
               </div>
@@ -72,8 +96,15 @@ function Contact(props) {
                 <h3>Phone</h3>
                 <p>+972-53-301-6070</p>
               </div>
-            </div>
-            <div className="box">
+            </motion.div>
+
+            <motion.div
+              className="box"
+              variants={boxVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: delay * 3 }}
+            >
               <div className="icon">
                 <i className="fa fa-envelope-o" aria-hidden="true"></i>
               </div>
@@ -81,12 +112,18 @@ function Contact(props) {
                 <h3>Email</h3>
                 <p>Uria1346@gmail.com</p>
               </div>
-            </div>
+            </motion.div>
           </div>
-          <div className="contactForm">
+          <motion.div
+              className="contactForm"
+              variants={boxVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: delay * 4 }}
+            >
             <form ref={form} onSubmit={sendEmail}>
               <h2 className="text-center">Send Message</h2>
-              <br/>
+              <br />
               <div className="inputBox">
                 <input type="text" name="name" required />
                 <span>Full Name</span>
@@ -105,11 +142,11 @@ function Contact(props) {
                 <button className="btn">Send</button>
               </div>
             </form>
-          </div>
+            </motion.div>
         </div>
-        <div style={{minHeight: "6vh"}}></div>
+        <div style={{ minHeight: "6vh" }}></div>
       </section>
-    </div>
+    </motion.div>
   );
 }
 

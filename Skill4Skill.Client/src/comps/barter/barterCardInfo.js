@@ -75,7 +75,6 @@ function BarterCardInfo(props) {
 
   const connectUser = async (id) => {
     let flag = true;
-    //get user to connect
     let url = API_URL + "/users/single/" + id;
     let resp = await doApiGet(url);
     let userConnect = resp.data;
@@ -91,7 +90,6 @@ function BarterCardInfo(props) {
         flag = false;
       }
     });
-    //add connect to this user
     if (!flag) return;
     if (user.connections.length > 2 && user.role !== "admin" && user.role !== "premium") {
       toast.warning("you need to get a premium user to send more connections");
@@ -180,7 +178,7 @@ function BarterCardInfo(props) {
                 alt={item.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h4" component="div">
+                <Typography gutterBottom variant="h5" component="div">
                   {item.name}
                 </Typography>
                 <Typography gutterBottom variant="" component="div">

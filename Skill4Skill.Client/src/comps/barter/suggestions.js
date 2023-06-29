@@ -12,11 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
 
 function Suggestions(props) {
-  const [matchBarters, setMatchBarters] = useState([]);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
+  const [myUser, setMyUser] = useState({});
   const [popup, setPopup] = useState();
-  const [catInfo, setCatInfo] = useState([]);
-  const [data, setData] = useState(false);
   const [raitingAvg, setRaitingAvg] = useState(0);
   const [alreadyConnect, setAlreadyConnect] = useState(false);
   const nav = useNavigate();
@@ -27,44 +25,20 @@ function Suggestions(props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
-    let url = API_URL + "/users/myInfo";
+    let url = API_URL + "/users/single/" + item.id;
     let resp = await doApiGet(url);
-    setUser(resp.data);
-    const matchingKnowledgeObjects = item.knowledge.filter((knowledgeObject) =>
-      resp.data.interested.some(
-        (interestedObject) =>
-          interestedObject.subCat === knowledgeObject.subCat &&
-          interestedObject.catNum === knowledgeObject.catNum
-      )
-    );
-    setMatchBarters(matchingKnowledgeObjects);
-    let tempArr = [];
-    let encounteredValues = [];
-    for (let i = 0; i < matchingKnowledgeObjects.length; i++) {
-      if (encounteredValues.includes(matchingKnowledgeObjects[i].catNum)) {
-        continue;
-      }
-      let url2 =
-        API_URL +
-        "/categoriesGroup/singleNumber/" +
-        matchingKnowledgeObjects[i].catNum;
-      let resp2 = await doApiGet(url2);
-      tempArr.push(resp2.data);
-      encounteredValues.push(matchingKnowledgeObjects[i].catNum);
-    }
-    setCatInfo(tempArr);
-    setData(true);
-    getAvg(item._id);
-  };
-  const getAvg = async (id) => {
-    let url = API_URL + "/users/single/" + id;
-    let resp = await doApiGet(url);
-    let userConnect = resp.data;
+    resp.data.match = item.match
+    resp.data.match = item.match
+    resp.data.reason = item.reason
     let sumRating = 0;
-    userConnect.reviews.forEach((review) => {
+    resp.data.reviews.forEach((review) => {
       sumRating += review.raiting;
     });
-    setRaitingAvg(sumRating / userConnect.reviews.length);
+    setRaitingAvg(sumRating / resp.data.reviews.length);
+    setUser(resp.data)
+    let url2 = API_URL + "/users/myInfo";
+    let resp2 = await doApiGet(url2);
+    setMyUser(resp2.data)
   };
 
   const connectUser = async (id) => {
@@ -87,7 +61,11 @@ function Suggestions(props) {
     });
     //add connect to this user
     if (!flag) return;
-    if (user.connections.length > 2 && user.role !== "admin" && user.role !== "premium") {
+    if (
+      user.connections.length > 2 &&
+      user.role !== "admin" &&
+      user.role !== "premium"
+    ) {
       toast.warning("you need to get a premium user to send more connections");
       nav("/checkoutPremium");
       return;
@@ -112,17 +90,14 @@ function Suggestions(props) {
   };
   const checkIfAlreadyConnect = async (id) => {
     let flag = true;
-    let url = API_URL + "/users/single/" + id;
-    let resp = await doApiGet(url);
-    let userConnect = resp.data;
-    userConnect.connections.forEach((element) => {
-      if (element.id === user._id) {
+    myUser.connections.forEach((element) => {
+      if (element.id === id) {
         flag = false;
       }
     });
     return flag;
   };
-  if (!data) {
+  if (!user) {
     return <div>Loading...</div>;
   } else
     return (
@@ -132,43 +107,29 @@ function Suggestions(props) {
           onClick={async (e) => {
             e.preventDefault();
             setPopup(true);
-            let connectFlag = await checkIfAlreadyConnect(item._id);
+            let connectFlag = await checkIfAlreadyConnect(user._id);
             setAlreadyConnect(connectFlag);
           }}
           style={{ cursor: "pointer" }}
         >
           <div
-          style={{
-            backgroundImage: `url(${item.img_url})`,
-            backgroundPosition: "center calc(13%)",
-          }}
+            style={{
+              backgroundImage: `url(${user.img_url})`,
+              backgroundPosition: "center calc(13%)",
+            }}
             className="product-img"
           ></div>
           <div className="p-2">
             <h4 className="gradi">
-              {item.first_name} {item.last_name}
+              {user.first_name} {user.last_name}
             </h4>
             <p className="text-center h4">
-              {catInfo.map((item, index) => {
-                return (
-                  <span key={index}>
-                    {item.name} {index === catInfo.length - 1 ? "" : ","}
-                  </span>
-                );
-              })}
-              -{" "}
-              {matchBarters.map((item, index) => {
-                return (
-                  <span key={index}>
-                    {item.subCat} {index === matchBarters.length - 1 ? "" : ","}
-                  </span>
-                );
-              })}
+              match: {user.match}
             </p>
           </div>
         </div>
         {popup ? (
-          <div className="card-product" style={{zIndex:"99"}}>
+          <div className="card-product" style={{ zIndex: "99" }}>
             <Card
               sx={{
                 minWidth: 250,
@@ -178,60 +139,36 @@ function Suggestions(props) {
               <CardMedia
                 component="img"
                 height="150"
-                image={item.img_url}
-                alt={item.first_name}
+                image={user.img_url}
+                alt={user.first_name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h4" component="div">
-                  {item.first_name} {item.last_name}
+                <Typography gutterBottom variant="h5" component="div">
+                  {user.first_name} {user.last_name}
                 </Typography>
                 <Typography gutterBottom variant="" component="div">
                   <Rating value={raitingAvg} precision={1} readOnly />
                 </Typography>
                 <Typography gutterBottom variant="" component="div">
-                  <strong>Categories: </strong>
-                  {catInfo.map((item, index) => {
-                    return (
-                      <span key={index}>
-                        {item.name} {index === catInfo.length - 1 ? "" : ","}
-                      </span>
-                    );
-                  })}
+                  <strong>Match: </strong>
+                  {user.match}
                 </Typography>
                 <Typography gutterBottom variant="" component="div">
-                  <strong>Subjects: </strong>
-                  {matchBarters.map((item, index) => {
-                    return (
-                      <span key={index}>
-                        {item.subCat}
-                        {index === matchBarters.length - 1 ? "" : ","}
-                      </span>
-                    );
-                  })}
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  <strong>{item.first_name} want to learn: </strong>
-                  {item.interested.map((item, index) => {
-                    return (
-                      <span key={index}>
-                        {item.subCat}
-                        <br />
-                      </span>
-                    );
-                  })}
+                  <strong>Reason: </strong>
+                  {user.reason}
                 </Typography>
                 <div className="text-center mt-3">
                   {alreadyConnect ? (
                     <button
                       className="btnDesign"
-                      onClick={() => connectUser(item._id)}
+                      onClick={() => connectUser(user._id)}
                     >
                       Connect
                     </button>
                   ) : (
                     <button
                       className="btnDesign"
-                      onClick={() => nav("/chat" + item._id)}
+                      onClick={() => nav("/chat" + user._id)}
                     >
                       Message
                     </button>

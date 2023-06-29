@@ -24,7 +24,7 @@ function EditProductSale(props) {
   useEffect(() => {
     doYear()
     doApi()
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  },[])// eslint-disable-line react-hooks/exhaustive-deps
 
   const doYear = () => { 
     let yearsar=[];

@@ -12,7 +12,7 @@ function UsersList(props) {
   useEffect(() => {
     doApi();
     itemsRef.current = itemsRef.current.slice(0, ar.length);
-  }, [ar]); // eslint-disable-line react-hooks/exhaustive-deps
+  },[ar]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/users/usersList";
@@ -108,7 +108,7 @@ function UsersList(props) {
 
                 <td>{item.address}</td>
                 <td>
-                  {item._id != "62d430486f10ec6ae9bd7196" ? (
+                  {item._id !== "62d430486f10ec6ae9bd7196" ? (
                     <select
                       key={i}
                       ref={(el) => (itemsRef.current[i] = el)}
@@ -121,17 +121,17 @@ function UsersList(props) {
                       <option value={item.role} defaultValue>
                         {item.role}
                       </option>
-                      {item.role != "admin" ? (
+                      {item.role !== "admin" ? (
                         <option value="admin">admin</option>
                       ) : (
                         ""
                       )}
-                      {item.role != "premium" ? (
+                      {item.role !== "premium" ? (
                         <option value="premium">premium</option>
                       ) : (
                         ""
                       )}
-                      {item.role != "user" ? (
+                      {item.role !== "user" ? (
                         <option value="user">user</option>
                       ) : (
                         ""

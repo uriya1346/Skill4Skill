@@ -1,8 +1,16 @@
 import React from "react";
 import "../css/message.css";
 import { FaMap } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-function Message(props) {
+function Message() {
+  const boxVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const delay = 0.15;
+
   return (
     <div className="message">
       <h1>
@@ -21,15 +29,19 @@ function Message(props) {
         Here you can explore a map of passionate learners in your area who are
         eager to share their knowledge and learn from others.
       </h5>
-      <button
+      <motion.button
+        className="btn"
+        variants={boxVariants}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: delay  }}
         onClick={() => {
           let message = document.querySelector(".message");
           message.style.display = "none";
         }}
-        className="btn"
       >
         Let's Start!
-      </button>
+      </motion.button>
     </div>
   );
 }

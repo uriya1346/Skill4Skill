@@ -39,7 +39,7 @@ const ForgotPassword = () => {
   const chechPassword = async () => {
     let message = document.querySelector(".message");
     message.style.display = "none";
-    if (passwordVal == randomPassword) {
+    if (passwordVal === randomPassword) {
       setFlag(false);
       setFlagNewPassword(true);
     } else toast.error("the password is not match");

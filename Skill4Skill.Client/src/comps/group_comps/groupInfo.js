@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { addProdVisitedToLocal } from "../../services/localService";
@@ -10,7 +10,7 @@ function RentalCarInfo(props) {
 
   useEffect(() => {
     doApi();
-  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
+  },[location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/group/single/" + params.id;
@@ -32,7 +32,7 @@ function RentalCarInfo(props) {
               </h1>
               <p className="text-muted text-center">{group.info}</p>
               <div className="text-center my-5">
-                <img src="/images/logo-no-background.png" height={"35vh"} />
+                <img src="/images/logo-no-background.png" height={"35vh"} alt="logo-no-background"/>
               </div>
               <div className="d-flex justify-content-center mt-4">
                 <Link

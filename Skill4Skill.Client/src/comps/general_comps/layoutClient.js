@@ -17,7 +17,7 @@ function LayoutClient(props) {
 
   useEffect(() => {
     setLogin(checkTokenLocal());
-  }, []);
+  },[]);
 
   useEffect(() => {
     if (location.pathname.includes("barterMap") || location.pathname.includes("chat")) {
@@ -25,7 +25,7 @@ function LayoutClient(props) {
     } else {
       setHideFooter(false);
     }
-  }, [location.pathname]);
+  },[location.pathname]);
   
 
   return (

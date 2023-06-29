@@ -34,45 +34,35 @@ function ClientFooter(props) {
                   className="fa fa-facebook me-1"
                   style={{ color: "#3b5998" }}
                 ></i>
-                <a href="#" className="text-white">
-                  Facebook
-                </a>
+                <button className="link-button text-white">Facebook</button>
               </li>
               <li>
                 <i
                   className="fa fa-twitter me-1"
                   style={{ color: "#1da1f2" }}
                 ></i>
-                <a href="#" className="text-white">
-                  Twitter
-                </a>
+                <button className="link-button text-white">Twitter</button>
               </li>
               <li>
                 <i
                   className="fa fa-instagram me-1"
                   style={{ color: "#c32aa3" }}
                 ></i>
-                <a href="#" className="text-white">
-                  Instagram
-                </a>
+                <button className="link-button text-white">Instagram</button>
               </li>
               <li>
                 <i
                   className="fa fa-linkedin me-1"
                   style={{ color: "#0077b5" }}
                 ></i>
-                <a href="#" className="text-white">
-                  LinkedIn
-                </a>
+                <button className="link-button text-white">LinkedIn</button>
               </li>
               <li>
                 <i
                   className="fa fa-youtube me-1"
                   style={{ color: "#ff0000" }}
                 ></i>
-                <a href="#" className="text-white">
-                  YouTube
-                </a>
+                <button className="link-button text-white">YouTube</button>
               </li>
             </ul>
           </div>

@@ -6,7 +6,7 @@ import { BeatLoader } from "react-spinners";
 import CartInfo from "./cartinfo";
 import MyConnections from "./myConnections";
 
-function Cart(props) {
+function Cart(props){
   let arr = [];
   const { showCart, setShowCart } = useContext(AppContext);
   const [usersRequests, setUsersRequests] = useState([]);
@@ -16,7 +16,7 @@ function Cart(props) {
   const [requestCount, setRequestCount] = useState(0);
   useEffect(() => {
     doApi();
-  }, [showCart]); // eslint-disable-line react-hooks/exhaustive-deps
+  },[showCart]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/users/myInfo";

@@ -19,7 +19,7 @@ function TestSkill(props) {
 
   useEffect(() => {
     doApi();
-  });
+  },[]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     try {

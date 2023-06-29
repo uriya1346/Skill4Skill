@@ -12,7 +12,7 @@ function ClientHeader(props) {
 
   useEffect(() => {
     setLogin(checkTokenLocal());
-  }, [location]);
+  },[location]);
 
   window.addEventListener("scroll", function () {
     let header = document.querySelector("header");
@@ -24,80 +24,51 @@ function ClientHeader(props) {
       <div className="container">
         <nav className=" navbar navbar-expand-md navbar-light ">
           <Link onClick={() => setOpen(false)} to="/">
-            {/* <i
-              className="fa fa-ravelry logo me-md-5"
-              style={{ fontSize: "28px" }}
-              aria-hidden="true"
-            ></i> */}
-            <img src="/images/logo-no-background.png" height={"25vh"} />
+            <img src="/images/logo-no-background.png" height={"25vh"} alt="logo-no-background"/>
           </Link>
           <button
             style={{ borderRadius: "24px 8px", color: "#00BFFF" }}
             className="navbar-toggler btn"
-            data-toggle="collapse"
-            data-target="#navbarMenu"
+            onClick={() => setOpen(!isOpen)}
           >
             <Hamburger toggled={isOpen} toggle={setOpen} />
           </button>
           <div
-            className="align-items-center collapse navbar-collapse justify-content-around"
+            className={`align-items-center collapse navbar-collapse justify-content-around ${
+              isOpen ? "show" : ""
+            }`}
             id="navbarMenu"
           >
             <div className="links_header">
-              <Link
-                onClick={() => setOpen(false)}
-                data-toggle="collapse"
-                data-target="#navbarMenu"
-                to="/"
-              >
+              <Link onClick={() => setOpen(false)} to="/">
                 <i
                   className="fa fa-home me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
                 Home
               </Link>
-              <Link
-                onClick={() => setOpen(false)}
-                data-toggle="collapse"
-                data-target="#navbarMenu"
-                to="/groupCat"
-              >
+              <Link onClick={() => setOpen(false)} to="/groupCat">
                 <i
                   className="fa fa-users me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
-                Learning Group
+                Categories
               </Link>
-              <Link
-                onClick={() => setOpen(false)}
-                data-toggle="collapse"
-                data-target="#navbarMenu"
-                to="/barter"
-              >
+              <Link onClick={() => setOpen(false)} to="/barter">
                 <i
                   className="fa fa-american-sign-language-interpreting me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
-                Skill Barter
+                Barter
               </Link>
-              <Link
-                onClick={() => setOpen(false)}
-                data-toggle="collapse"
-                data-target="#navbarMenu"
-                to="/barterMap"
-              >
+              <Link onClick={() => setOpen(false)} to="/barterMap">
                 <i
                   className="fa fa-map me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
-                Barter Map
+                Map
               </Link>
-              <Link
-                onClick={() => setOpen(false)}
-                data-toggle="collapse"
-                data-target="#navbarMenu"
-                to="contact"
-              >
+              <Link onClick={() => setOpen(false)} to="contact">
                 <i
                   className="fa fa-phone me-2 d-block text-center"
                   aria-hidden="true"
@@ -112,37 +83,31 @@ function ClientHeader(props) {
                   <Link
                     to="/userInfo"
                     onClick={() => setOpen(false)}
-                    data-toggle="collapse"
-                    data-target="#navbarMenu"
                   >
                     <i
                       className="fa fa-pencil me-2 d-block text-center"
                       aria-hidden="true"
                     ></i>
-                    Edit Info
+                    User
                   </Link>
-                  <a
-                    data-toggle="collapse"
-                    data-target="#navbarMenu"
+                  <Link
+                   to={location.pathname}
                     onClick={() => {
                       setOpen(false);
                       showCart === "none"
                         ? setShowCart("block")
                         : setShowCart("none");
                     }}
-                    className="btn text-white btnEditHeader"
                   >
                     <i
                       className="fa fa-users d-block text-center"
                       aria-hidden="true"
                     ></i>
                     Network
-                  </a>
+                  </Link>
                   <Link
                     to="/logout"
                     onClick={() => setOpen(false)}
-                    data-toggle="collapse"
-                    data-target="#navbarMenu"
                   >
                     <i
                       className="mx-2 fa fa-sign-out me-2 d-block text-center"
@@ -156,8 +121,6 @@ function ClientHeader(props) {
                   <Link
                     to="/login"
                     onClick={() => setOpen(false)}
-                    data-toggle="collapse"
-                    data-target="#navbarMenu"
                   >
                     <i className="fa fa-sign-in mx-2" aria-hidden="true"></i>Log
                     in
@@ -166,8 +129,6 @@ function ClientHeader(props) {
                   <Link
                     to="/signup"
                     onClick={() => setOpen(false)}
-                    data-toggle="collapse"
-                    data-target="#navbarMenu"
                   >
                     <i className="fa fa-plus mx-2" aria-hidden="true"></i>Sign
                     up

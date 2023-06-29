@@ -25,7 +25,7 @@ function AddSaleProduct(props) {
   useEffect(() => {
     doYear()
     doApi()
-  }, [])
+  },[])
 
   const doYear = () => { 
     let yearsar=[];

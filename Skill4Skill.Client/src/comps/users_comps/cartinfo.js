@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/shopContext";

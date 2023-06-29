@@ -109,6 +109,15 @@ header.sticky{
 .btnEditHeader:hover{
   color: #00BFFF!important;
 }
+
+.link-button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  font-family: arial, sans-serif;  
+  cursor: pointer;
+}
+
 @media (max-width: 767px){
   .links_header{
     display: block;

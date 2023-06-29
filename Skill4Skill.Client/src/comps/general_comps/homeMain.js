@@ -1,13 +1,34 @@
 import { Link } from "react-router-dom";
 import "../css/homeMain.css";
+import { motion } from "framer-motion";
 
 function HomeMain(props) {
+  const boxVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const delay = 0.15;
   return (
-    <div className="container-fluid shadow">
+    <motion.div
+      className="container-fluid shadow"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
       <section className="info container">
-        <h1 id="welcomeHeader">
+        <motion.h1
+          id="welcomeHeader"
+          animate={{ scale: [1, 1.1, 1], x: [0, 0, 0] }}
+          transition={{
+            duration: 2,
+            ease: "easeInOut",
+            times: [0, 0.5, 1],
+            loop: Infinity,
+          }}
+        >
           WELCOME <i className="fa fa-ravelry" aria-hidden="true"></i>
-        </h1>
+        </motion.h1>
         <p className="text-center">
           At Skill4Skill, we believe that learning is a lifelong journey that
           should be accessible to everyone. By creating a platform where
@@ -18,7 +39,13 @@ function HomeMain(props) {
         </p>
 
         <div className="rowbox">
-          <div className="info-col">
+          <motion.div
+            variants={boxVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: delay  }}
+            className="info-col"
+          >
             <h3>
               Skill4Skill: Learn and Grow Together
               <i className="fa fa-gg ms-2" aria-hidden="true"></i>
@@ -33,8 +60,14 @@ function HomeMain(props) {
               knowledge that will help you achieve your personal and
               professional goals.
             </p>
-          </div>
-          <div className="info-col">
+          </motion.div>
+          <motion.div
+            variants={boxVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: delay * 2 }}
+            className="info-col"
+          >
             <h3>
               Join Our Community of Lifelong Learners
               <i className="fa fa-gg ms-2" aria-hidden="true"></i>
@@ -47,8 +80,14 @@ function HomeMain(props) {
               who are eager to learn and grow. Plus, our platform makes it easy
               to connect with others and schedule sessions that work for you.
             </p>
-          </div>
-          <div className="info-col">
+          </motion.div>
+          <motion.div
+            variants={boxVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: delay * 3 }}
+            className="info-col"
+          >
             <h3>
               Unlock Your Potential with Skill4Skill
               <i className="fa fa-gg ms-2" aria-hidden="true"></i>
@@ -62,7 +101,7 @@ function HomeMain(props) {
               what are you waiting for? Register now and start learning from
               others while sharing your own skills and expertise with the world!
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -161,7 +200,9 @@ function HomeMain(props) {
           What Our Customers Says
           <i className="ms-2 fa fa-comments" aria-hidden="true"></i>
         </h1>
-        <p className="text-center">What Our lovely Customers Says About THE LOVE OF Skill4Skill</p>
+        <p className="text-center">
+          What Our lovely Customers Says About THE LOVE OF Skill4Skill
+        </p>
 
         <div className="rowbox" data-aos="fade-right" data-aos-duration="1500">
           <div className="testimonials-col">
@@ -207,16 +248,21 @@ function HomeMain(props) {
         </div>
       </section>
 
-      <section className="cta" data-aos="zoom-in" data-aos-duration="1500">
-        <h1>
-        Get in Touch - Let's Learn Together!
-        </h1>
+      <motion.section
+        className="cta"
+        data-aos="zoom-in"
+        data-aos-duration="1500"
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ ease: "easeOut", duration: 2 }}
+      >
+        <h1>Get in Touch - Let's Learn Together!</h1>
         <Link to="/contact" className="hero-btn">
           CONTACT US <i className="fa fa-sign-in" aria-hidden="true"></i>
         </Link>
-      </section>
+      </motion.section>
       <div style={{ minHeight: "3vh" }}></div>
-    </div>
+    </motion.div>
   );
 }
 

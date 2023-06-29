@@ -16,7 +16,7 @@ function GroupsListPage(props) {
   useEffect(() => {
     setAr([]);
     doApi();
-  }, [location]);// eslint-disable-line react-hooks/exhaustive-deps
+  },[location]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let urlCategory = API_URL + "/categoriesGroup/single/" + params.cat_url;

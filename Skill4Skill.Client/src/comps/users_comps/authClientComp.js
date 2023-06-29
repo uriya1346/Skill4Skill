@@ -15,7 +15,7 @@ function AuthClientComp(props) {
       nav("/login")
       toast.warning("You must be logged in user to be here, please log in and come back")
     }
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  },[])// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApiAuth = async () => {
     let url = API_URL + "/users/checkUserToken";

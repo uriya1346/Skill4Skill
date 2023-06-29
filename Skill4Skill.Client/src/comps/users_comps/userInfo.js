@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "../css/userInfo.css";
 import { BeatLoader } from "react-spinners";
 import AuthClientComp from "../users_comps/authClientComp";
+import { motion } from "framer-motion";
 
 function UserInfo(props) {
   const [user, setUser] = useState({});
@@ -56,17 +57,15 @@ function UserInfo(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  },[]);
 
   const doApi = async () => {
     let url = API_URL + "/users/myInfo";
     let resp = await doApiGet(url);
     setUser(resp.data);
-    if ((resp.data.role !== "admin") || (resp.data.role !== "premium")) 
-    {
-      setUserRoleFlag(true)
+    if (resp.data.role !== "admin" || resp.data.role !== "premium") {
+      setUserRoleFlag(true);
       console.log(12123432);
-      
     }
   };
 
@@ -110,20 +109,24 @@ function UserInfo(props) {
   return (
     <div className="container mb-5">
       <AuthClientComp />
-      {!userRoleFlag ?<div
-        className="premium-go"
-        style={{cursor: "pointer"}}
-        title="Get premium"
-        onClick={() => nav("/checkoutPremium")}
-      >
-         <h2>
-          <i className="fa fa-user-secret me-1" aria-hidden="true"></i>
-          Premium User
-        </h2>  
-      </div> : ""}
+      {!userRoleFlag ? (
+        <div
+          className="premium-go"
+          style={{ cursor: "pointer" }}
+          title="Get premium"
+          onClick={() => nav("/checkoutPremium")}
+        >
+          <h2>
+            <i className="fa fa-user-secret me-1" aria-hidden="true"></i>
+            Premium User
+          </h2>
+        </div>
+      ) : (
+        ""
+      )}
       <div
         className="delete-user"
-        style={{cursor: "pointer"}}
+        style={{ cursor: "pointer" }}
         onClick={deleteUser}
       >
         <h2>
@@ -133,7 +136,10 @@ function UserInfo(props) {
       <div style={{ minHeight: "15vh" }}></div>
       {user._id ? (
         <div>
-          <form
+          <motion.form
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             onSubmit={handleSubmit(onSubForm)}
             className="col-md-6 p-3 shadow mx-auto h4 form-design text-dark"
           >
@@ -258,7 +264,7 @@ function UserInfo(props) {
                 Edit Knowledge
               </Link>
             </div>
-          </form>
+          </motion.form>
           <div style={{ minHeight: "20vh" }}></div>
         </div>
       ) : (

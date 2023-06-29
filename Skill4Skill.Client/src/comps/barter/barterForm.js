@@ -21,7 +21,7 @@ function BarterForm(props) {
 
   useEffect(() => {
     doApi();
-  });
+  },[]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/categoriesGroup";
@@ -275,6 +275,7 @@ function BarterForm(props) {
                       marks
                       min={1}
                       max={10}
+                      color="secondary"
                       onChange={(event, newValue) => {
                         setLevel(newValue);
                       }}
@@ -289,9 +290,7 @@ function BarterForm(props) {
                     </button>
                   </div>
                 </div>
-                <p
-                  className="text-info mb-5 fs-6 mt-1"
-                >
+                <p className="text-info mb-5 fs-6 mt-1">
                   *To add a new skill you will pass a test that will test your
                   level of knowledge
                 </p>
@@ -316,7 +315,7 @@ function BarterForm(props) {
                           >
                             {item.subCat}
                           </p>
-                          <div style={{ width: "68%" }}>
+                          <div style={{ width: "68%" }} title={+item.level}>
                             <Slider
                               defaultValue={+item.level}
                               step={1}
@@ -324,7 +323,6 @@ function BarterForm(props) {
                               min={1}
                               max={10}
                               disabled
-                              color="secondary"
                             />
                           </div>
                           <div className="ms-3">
@@ -332,6 +330,7 @@ function BarterForm(props) {
                               aria-label="delete"
                               onClick={() => deleteKnowledge(item.id)}
                               className="text-danger badge text-center mx-2 btnLog align-self-baseline"
+                              title="Delete Skill"
                               style={{
                                 width: "42px",
                                 padding: "5px 6px 8px 5px",

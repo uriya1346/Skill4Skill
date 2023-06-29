@@ -4,7 +4,7 @@ import { API_URL, doApiMethod } from "../../services/apiService";
 import { BeatLoader } from "react-spinners";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
-function RentalCarInfo(props) {
+function LearningPath(props) {
   let params = useParams();
   const [steps, setSteps] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -13,7 +13,7 @@ function RentalCarInfo(props) {
 
   useEffect(() => {
     doApi();
-  }, []);
+  },[]);// eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     try {
@@ -139,4 +139,4 @@ function RentalCarInfo(props) {
     );
 }
 
-export default RentalCarInfo;
+export default LearningPath;
