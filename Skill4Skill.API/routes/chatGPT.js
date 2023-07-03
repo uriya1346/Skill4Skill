@@ -6,8 +6,7 @@ const { secret } = require("../config/config");
 router.post("/chat", async (req, res) => {
   try {
      const message = req.body.message;
-     console.log(message);
-     
+
     // const response = await axios.post(
     //   "https://api.openai.com/v1/chat/completions",
     //   {

@@ -3,35 +3,52 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import AuthClientComp from "../users_comps/authClientComp";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
+import "../css/testSkill.css";
 
 function TestSkill(props) {
   const params = useParams();
   const [questions, setQuestions] = useState([]);
   const [subjectName, setSubjectName] = useState("");
   const [flag, setFlag] = useState(false);
-  const { register, handleSubmit } = useForm();
   const [user, setUser] = useState({});
   const [catName, setCatName] = useState({});
   const nav = useNavigate();
+  const [timeLeft, setTimeLeft] = useState(25); // time for each question
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     doApi();
-  },[]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (timeLeft > 0 && flag) {
+      const timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+
+    if (timeLeft === 0) {
+      handleNextQuestion();
+    }
+  }, [timeLeft, flag]);
 
   const doApi = async () => {
     try {
       const parts = params.data.split("*");
+      console.log(parts);
+      
       const inputSubCat = parts[0];
       const catNumber = parts[1];
       const levelParam = parts[2];
       setSubjectName(inputSubCat);
-      let urlCat = API_URL + "/categoriesGroup/singleNumber/"+catNumber;
+      let urlCat = API_URL + "/categoriesGroup/singleNumber/" + catNumber;
       let resp = await doApiGet(urlCat);
-      let categoryName = resp.data.name
-      setCatName(categoryName)
+      let categoryName = resp.data.name;
+      setCatName(categoryName);
       let questionsNum = +levelParam;
       let url = API_URL + "/openai/chat";
       let body = {
@@ -58,22 +75,38 @@ function TestSkill(props) {
     }
   };
 
-  const onSubForm = async (data) => {
-    const correctAnswers = questions.questions.map((question, index) => {
-      const userAnswer = data[Object.keys(data)[index]];
-      const correctAnswer = question.answer;
-      return userAnswer === correctAnswer;
-    });
+  const handleNextQuestion = () => {
+    if (currentQuestion < questions.questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setTimeLeft(3);
+    } else {
+      let correctAnswersCount = 0;
+      for (let i = 0; i < questions.questions.length; i++) {
+        if (questions.questions[i].answer === answers[i]) {
+          correctAnswersCount++;
+        }
+      }
+      onSubForm(correctAnswersCount);
+    }
+  };
 
-    const correctCount = correctAnswers.filter(Boolean).length; // Count the number of correct answers
-    if (correctCount < correctAnswers.length / 2) {
+  const handleOptionChange = (e) => {
+    let newAnswers = [...answers];
+    newAnswers[currentQuestion] = e.target.value;
+    setAnswers(newAnswers);
+  };
+
+  const onSubForm = async (correctCount) => {
+    let correctAnswers = questions.questions.length;
+    if (correctCount < correctAnswers / 2) {
       toast.dark(
-        `you got ${correctCount} out of ${correctAnswers.length} questions correct. Try again later`
+        `you got ${correctCount} out of ${correctAnswers} questions correct. Try again later`
       );
       nav(-1);
+      return;
     } else {
       toast.success(
-        `you got ${correctCount} out of ${correctAnswers.length} questions correct.`
+        `you got ${correctCount} out of ${correctAnswers} questions correct.`
       );
       const parts = params.data.split("*");
       const inputSubCat = parts[0];
@@ -90,7 +123,7 @@ function TestSkill(props) {
       try {
         let resp = await doApiMethod(url, "PUT", tempUser);
         if (resp.data.modifiedCount) {
-          toast.success("User updated");
+          toast.success("The skill was added!");
           nav(-1);
         } else {
           toast.warning("you not change nothing");
@@ -115,48 +148,61 @@ function TestSkill(props) {
     );
   } else
     return (
-      <div className="container">
-        <AuthClientComp />
-        <div style={{ minHeight: "20vh" }}></div>
-        <form
-          onSubmit={handleSubmit(onSubForm)}
-          className="col-md-8 p-3 shadow mx-auto h4 form-design text-dark"
-        >
-          <h2 className="gradi text-center my-5">
-            <i className="fa fa-lastfm me-4 mb-2" aria-hidden="true"></i>
-            <strong>{catName}</strong> - {subjectName}
-          </h2>
-          {questions.questions.map((item, key) => {
-            return (
-              <div className="my-5 text-center mb-3" key={key}>
-                <label className="mb-3">
-                  {item.question}
-                </label>
-                <div className="mx-2">
-                  <select
-                    {...register(`answer${key}`)}
-                    className="form-select color-black me-4"
-                  >
-                    <option value="">Choose Answer</option>
-                    {item.options.map((item2, key2) => {
-                      return (
-                        <option key={key2} value={item2}>
-                          {item2}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
+      <div>
+        <div className="frame" key={currentQuestion}>
+          <AuthClientComp />
+          <div className="overlap-group-wrapper mt-5">
+            <div className="overlap-group mt-5">
+              <h1 className="h-1">{subjectName} Test</h1>
+              <div className="text-wrapper-2">
+                {questions.questions[currentQuestion].question}
               </div>
-            );
-          })}
-
-          <h1 className="text-center">
-            <button className="btnLog mt-4">Submit</button>
-          </h1>
-          <div style={{ minHeight: "7vh" }}></div>
-        </form>
-        <div style={{ minHeight: "10vh" }}></div>
+              <div className="text-wrapper-3">Possible Answers:</div>
+              <div className="overlap">
+                <input
+                  type="radio"
+                  id={`option1-${currentQuestion}`}
+                  name={`answer-${currentQuestion}`}
+                  value={questions.questions[currentQuestion].options[0]}
+                  onChange={handleOptionChange}
+                />
+                <label htmlFor={`option1-${currentQuestion}`}>
+                  {questions.questions[currentQuestion].options[0]}
+                </label>
+              </div>
+              <div className="div-wrapper">
+                <input
+                  type="radio"
+                  id={`option2-${currentQuestion}`}
+                  name={`answer-${currentQuestion}`}
+                  value={questions.questions[currentQuestion].options[1]}
+                  onChange={handleOptionChange}
+                />
+                <label htmlFor={`option2-${currentQuestion}`}>
+                  {questions.questions[currentQuestion].options[1]}
+                </label>
+              </div>
+              <div className="div">
+                <input
+                  type="radio"
+                  id={`option3-${currentQuestion}`}
+                  name={`answer-${currentQuestion}`}
+                  value={questions.questions[currentQuestion].options[2]}
+                  onChange={handleOptionChange}
+                />
+                <label htmlFor={`option3-${currentQuestion}`}>
+                  {questions.questions[currentQuestion].options[2]}
+                </label>
+              </div>
+              <button className="btn" onClick={handleNextQuestion}>Next</button>
+              <div className="timer">
+                <div className="text-wrapper-4">Time Left:</div>
+                <div className="text-wrapper-5">{timeLeft}</div>
+                <div className="text-wrapper-6">seconds</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
 }

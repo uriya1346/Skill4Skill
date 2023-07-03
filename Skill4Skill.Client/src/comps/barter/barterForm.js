@@ -67,7 +67,8 @@ function BarterForm(props) {
       toast.warning("this skill already exist");
       return;
     }
-    nav("/barterForm/testSkill" + inputSubCat + "*" + catNumber + "*" + level);
+    let encodedInputSubCat = encodeURIComponent(inputSubCat);
+    nav("/barterForm/testSkill" + encodedInputSubCat + "*" + catNumber + "*" + level);
   };
   const addInterested = async (event) => {
     event.preventDefault();

@@ -137,113 +137,113 @@ function BarterCardInfo(props) {
     return flag;
   };
   return (
-    <div className="product-item col-md-4 p-2">
-      <div
-        className="shadow text-center"
-        onClick={async (e) => {
-          e.preventDefault();
-          setPopup(true);
-          let connectFlag = await checkIfAlreadyConnect(item.userId);
-          setAlreadyConnect(connectFlag);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        <div
-          style={{
-            backgroundImage: `url(${item.img})`,
-            backgroundPosition: "center calc(13%)",
-          }}
-          className="product-img"
-        ></div>
-        <div className="p-2">
-          <h4 className="gradi">{item.name}</h4>
-          <p className="text-center h4">
-            {catInfo.name} - {item.subCat}
-          </p>
-        </div>
-      </div>
-      {popup ? (
-        <div className="card-product">
-          <div className="card-product">
-            <Card
-              sx={{
-                minWidth: 250,
-                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="150"
-                image={item.img}
-                alt={item.name}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {item.name}
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  <Rating value={raitingAvg} precision={1} readOnly />
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  <strong>Connections:</strong> {user.connections.length}
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  <strong>Teaching Categories:</strong> {catInfo.name}
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  <strong>Teaching Subjects:</strong> {item.subCat}
-                  <Typography
-                    gutterBottom
-                    variant=""
-                    component="div"
-                    className="mt-2"
-                  >
-                    I can offer: <br />
-                    <strong>Offering Categories:</strong> {catOfferInfo.name}
-                    <br />
-                    <strong>Offering Subjects:</strong> {item.canOfferSubCat}
-                  </Typography>
-                </Typography>
-                <Typography gutterBottom variant="" component="div">
-                  {item.des}
-                </Typography>
-                <div className="text-center mt-3">
-                  {alreadyConnect ? (
-                    <button
-                      className="btnDesign"
-                      onClick={() => connectUser(item.userId)}
-                    >
-                      Connect
-                    </button>
-                  ) : (
-                    <button
-                      className="btnDesign"
-                      onClick={() => nav("/chat" + item.userId)}
-                    >
-                      Message
-                    </button>
-                  )}
-                </div>
-              </CardContent>
-              <CardActions>
-                <Button
-                  size="large"
-                  onClick={() => setPopup(false)}
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "78%",
-                    color: "red",
-                  }}
-                >
-                  <i className="fa fa-times" aria-hidden="true"></i>
-                </Button>
-              </CardActions>
-            </Card>
-          </div>
-        </div>
-      ) : null}
+<div className="product-item col-md-4 p-3">
+  <div
+    className="card shadow text-center h-100"
+    onClick={async (e) => {
+      e.preventDefault();
+      setPopup(true);
+      let connectFlag = await checkIfAlreadyConnect(item.userId);
+      setAlreadyConnect(connectFlag);
+    }}
+    style={{ cursor: "pointer" }}
+  >
+    <div
+      style={{
+        backgroundImage: `url(${item.img})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center calc(13%)",
+        height: "200px",
+      }}
+      className="product-img"
+    ></div>
+    <div className="card-body">
+      <h4 className="card-title text-primary">{item.name}</h4>
+      <p className="card-text text-center">
+        {catInfo.name} - {item.subCat}
+      </p>
     </div>
+  </div>
+  {popup ? (
+    <div className="card-product">
+      <Card
+        sx={{
+          minWidth: 250,
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="150"
+          image={item.img}
+          alt={item.name}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.name}
+          </Typography>
+          <Typography gutterBottom variant="" component="div">
+            <Rating value={raitingAvg} precision={1} readOnly />
+          </Typography>
+          <Typography gutterBottom variant="" component="div">
+            <strong>Connections:</strong> {user.connections.length}
+          </Typography>
+          <Typography gutterBottom variant="" component="div">
+            <strong>Teaching Categories:</strong> {catInfo.name}
+          </Typography>
+          <Typography gutterBottom variant="" component="div">
+            <strong>Teaching Subjects:</strong> {item.subCat}
+            <Typography
+              gutterBottom
+              variant=""
+              component="div"
+              className="mt-2"
+            >
+              I can offer: <br />
+              <strong>Offering Categories:</strong> {catOfferInfo.name}
+              <br />
+              <strong>Offering Subjects:</strong> {item.canOfferSubCat}
+            </Typography>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {item.des}
+          </Typography>
+          <div className="text-center mt-3">
+            {alreadyConnect ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => connectUser(item.userId)}
+              >
+                Connect
+              </button>
+            ) : (
+              <button
+                className="btn btn-secondary"
+                onClick={() => nav("/chat" + item.userId)}
+              >
+                Message
+              </button>
+            )}
+          </div>
+        </CardContent>
+        <CardActions>
+          <Button
+            size="large"
+            onClick={() => setPopup(false)}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "78%",
+              color: "red",
+            }}
+          >
+            <i className="fa fa-times" aria-hidden="true"></i>
+          </Button>
+        </CardActions>
+      </Card>
+    </div>
+  ) : null}
+</div>
   );
 }
 

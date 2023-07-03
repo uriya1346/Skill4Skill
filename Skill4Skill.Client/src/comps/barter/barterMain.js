@@ -49,53 +49,45 @@ function BarterMain(props) {
     setAr(array);
     let url2 = API_URL + "/barter/suggestions";
     let resp2 = await doApiGet(url2);
-    console.log(resp2.data);
-    
     setSuggestionsAr(resp2.data);
     setLoadingFlag(true)
   };
 
   return (
-    <div
-      className="container-fluid"
-      style={{ overflow: "hidden", height: "100%" }}
-    >
-      <div style={{ minHeight: "5vh" }}></div>
-      <div className="container categories_list">
-        <h2 className="text-center gradi text-uppercase">
-          <i className="fa fa-lastfm me-4 mb-4" aria-hidden="true"></i>Your
-          adjustments
-        </h2>
-        <div className="row">
-          {ar.map((item, index) => {
-            return <BarterCardInfo key={index} item={item} />;
-          })}
-        </div>
-        <hr />
-        <h2 className="text-center gradi text-uppercase">
-          <i className="fa fa-lastfm me-4 mb-4" aria-hidden="true"></i>
-          suggestions for you
-        </h2>
-
-        {!loadingFlag ? (
-          <div className="text-center mt-4">
-            <BeatLoader />
-          </div>
-        ) : (
-          <div className="row">
-          {suggestionsAr.map((item, index) => {
-            return <Suggestions key={index} item={item} />;
-          })}
-        </div>
-        )}
+    <div className="container-fluid py-1" style={{ overflow: "hidden", minHeight: "100vh" }}>
+    <div className="container categories_list py-5">
+      <h2 className="text-center gradi text-uppercase">
+        <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
+        Your Adjustments
+      </h2>
+      <div className="row mt-5">
+        {ar.map((item, index) => (
+          <BarterCardInfo key={index} item={item} />
+        ))}
       </div>
-      <div style={{ minHeight: "35vh" }}></div>
-      <div className="text-center">
-        <Link to="/barterForm" className="btn btn-warning">
-          Edit preferences and knowledge
-        </Link>
-      </div>
+      <hr className="my-5" />
+      <h2 className="text-center gradi text-uppercase">
+        <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
+        Suggestions for You
+      </h2>
+      {!loadingFlag ? (
+        <div className="text-center mt-4">
+          <BeatLoader />
+        </div>
+      ) : (
+        <div className="row mt-5">
+          {suggestionsAr.map((item, index) => (
+            <Suggestions key={index} item={item} />
+          ))}
+        </div>
+      )}
     </div>
+    <div className="text-center py-5">
+      <Link to="/barterForm" className="btn btn-warning btn-lg">
+        Edit Preferences and Knowledge
+      </Link>
+    </div>
+  </div>
   );
 }
 
