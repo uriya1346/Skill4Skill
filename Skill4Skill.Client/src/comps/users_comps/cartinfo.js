@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { API_URL, doApiGet } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/shopContext";
+import AuthClientComp from "./authClientComp";
 
 function Cart(props) {
   let item = props.item;
@@ -22,6 +23,7 @@ function Cart(props) {
 
   return (
     <div>
+      <AuthClientComp/>
     <div key={item._id} className="ms-2 d-flex d-flex justify-content-between">
       <div>
         <p className="me-3">

@@ -7,7 +7,7 @@
   padding: 1em;
 }
 
-.overlap-group-wrapper {
+.frame .overlap-group-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +16,7 @@
   max-width: 1200px;
 }
 
-.overlap-group {
+.frame .overlap-group {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 0px 10px #0000004c;
@@ -27,21 +27,21 @@
   text-align: center;
 }
 
-.overlap,
-.div-wrapper,
-.div {
+.frame .overlap,
+.frame .div-wrapper,
+.frame .div {
   background-color: #eeeeee;
   border-radius: 5px;
   padding: 1em;
   margin: 1em;
 }
 
-.text-wrapper,
-.h-1,
-.text-wrapper-2,
-.text-wrapper-3,
-.text-wrapper-4,
-.text-wrapper-5 {
+.frame .text-wrapper,
+.frame .h-1,
+.frame .text-wrapper-2,
+.frame .text-wrapper-3,
+.frame .text-wrapper-4,
+.frame .text-wrapper-5 {
   font-family: "Roboto-Regular", Helvetica;
   color: #333333;
   text-align: center;
@@ -49,20 +49,20 @@
   margin: 1em;
 }
 
-.h-1 {
+.frame .h-1 {
   font-size: 2em;
 }
 
-.text-wrapper-2 {
+.frame .text-wrapper-2 {
   font-size: 1.5em;
 }
 
-.text-wrapper-3,
-.text-wrapper-4,
-.text-wrapper-5 {
+.frame .text-wrapper-3,
+.frame .text-wrapper-4,
+.frame .text-wrapper-5 {
   font-size: 1.2em;
 }
-.timer {
+.frame .timer {
   position: absolute;
   top:13vh; 
   right: 5vw; 
@@ -78,42 +78,42 @@
   box-shadow: 0px 0px 10px #0000004c;
 }
 
-.text-wrapper-4,
-.text-wrapper-5,
-.text-wrapper-6 {
+.frame .text-wrapper-4,
+.frame .text-wrapper-5,
+.frame .text-wrapper-6 {
   margin: 0;
   font-family: "Roboto-Regular", Helvetica;
   text-align: center;
 }
 
-.text-wrapper-4 {
+.frame .text-wrapper-4 {
   font-size: 20px;
 }
 
-.text-wrapper-5 {
+.frame .text-wrapper-5 {
   font-size: 24px;
   font-weight: bold;
 }
 
-.text-wrapper-6 {
+.frame .text-wrapper-6 {
   font-size: 16px;
 }
 
 @media (max-width: 768px) {
-  .timer {
+  .frame .timer {
     width: 100px;
     height: 100px;
     /* font-size: small; */
   }
-  .text-wrapper-4 {
+  .frame .text-wrapper-4 {
     font-size: 12px;
   }
-  .text-wrapper-5 {
+  .frame .text-wrapper-5 {
     font-size: 16px;
     font-weight: bold;
   }
   
-  .text-wrapper-6 {
+  .frame .text-wrapper-6 {
     font-size: 8px;
   }
 }

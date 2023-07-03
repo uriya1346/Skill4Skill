@@ -5,6 +5,7 @@ import { API_URL, doApiGet } from "../../services/apiService";
 import { BeatLoader } from "react-spinners";
 import CartInfo from "./cartinfo";
 import MyConnections from "./myConnections";
+import AuthClientComp from "./authClientComp";
 
 function Cart(props){
   let arr = [];
@@ -39,6 +40,7 @@ function Cart(props){
         style={{ display: showCart }}
         className="cart gradient-background pb-3"
       >
+        <AuthClientComp/>
         <button
           className="btn close-btn"
           onClick={() => {

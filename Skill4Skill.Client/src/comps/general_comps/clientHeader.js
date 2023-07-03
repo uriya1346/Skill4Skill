@@ -88,7 +88,7 @@ function ClientHeader(props) {
                       className="fa fa-pencil me-2 d-block text-center"
                       aria-hidden="true"
                     ></i>
-                    User
+                    My User
                   </Link>
                   <Link
                    to={location.pathname}

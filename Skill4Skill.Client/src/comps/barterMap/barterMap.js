@@ -263,7 +263,7 @@ function BarterMap(props) {
                       ) : (
                         <button
                           className="btnDesign"
-                          onClick={() => nav("/chat" + selectedUser.userId)}
+                          onClick={() => nav("/chat/" + selectedUser.userId)}
                         >
                           Message
                         </button>

@@ -116,7 +116,7 @@ function Suggestions(props) {
       style={{
         backgroundImage: `url(${user.img_url})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "center calc(13%)",
         height: "200px",
       }}
       className="product-img"
@@ -170,7 +170,7 @@ function Suggestions(props) {
             ) : (
               <button
                 className="btn btn-secondary"
-                onClick={() => nav("/chat" + user._id)}
+                onClick={() => nav("/chat/" + user._id)}
               >
                 Message
               </button>

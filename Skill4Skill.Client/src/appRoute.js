@@ -115,7 +115,7 @@ function AppRoute(props) {
           {/* BARTER script */}
           <Route path="/barter" element={<BarterHome />} />
           <Route path="/barterForm" element={<BarterForm />} />
-          <Route path="/barterForm/testSkill:data" element={<TestSkill />} />
+          <Route path="/barterForm/testSkill/:data" element={<TestSkill />} />
           <Route path="/barter/cardInfo" element={<BarterCardInfo />} />
 
           {/* CHECKOUT script */}
@@ -125,7 +125,7 @@ function AppRoute(props) {
           <Route path="/barterMap" element={<BarterMap />} />
 
           {/* CHAT script */}
-          <Route path="/chat:id" element={<ChatMain />} />
+          <Route path="/chat/:id" element={<ChatMain />} />
 
           {/* ERROR 404 */}
           <Route path="/*" element={<Page404 />} />

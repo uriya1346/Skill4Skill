@@ -13,6 +13,7 @@ function BarterForm(props) {
   const [listOption, setListOption] = useState([]);
   const [listInterestedOption, setListInterestedOption] = useState([]);
   const [level, setLevel] = useState(3);
+  const [upgradeKey, setUpgradeKey] = useState();
   const nav = useNavigate();
   let inputCatRef = useRef();
   let inputSubCatRef = useRef();
@@ -21,7 +22,7 @@ function BarterForm(props) {
 
   useEffect(() => {
     doApi();
-  },[]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     let url = API_URL + "/categoriesGroup";
@@ -68,7 +69,14 @@ function BarterForm(props) {
       return;
     }
     let encodedInputSubCat = encodeURIComponent(inputSubCat);
-    nav("/barterForm/testSkill" + encodedInputSubCat + "*" + catNumber + "*" + level);
+    nav(
+      "/barterForm/testSkill/" +
+        encodedInputSubCat +
+        "*" +
+        catNumber +
+        "*" +
+        level
+    );
   };
   const addInterested = async (event) => {
     event.preventDefault();
@@ -104,6 +112,30 @@ function BarterForm(props) {
     } catch (err) {
       console.log(err.response);
       alert("There problem try again later");
+    }
+  };
+
+  const upgradeSkill = (level, item) => {
+    if (level<=item.level)
+    {
+      toast.warning("Please select a higher level")
+      return
+    }
+    let flag = window.confirm(
+      "Do you want to make a new test to update your skills?"
+    );
+    if (flag === true) {
+      let encodedInputSubCat = item.subCat;
+      nav(
+        "/barterForm/testSkill/" +
+          encodedInputSubCat +
+          "*" +
+          item.catNum +
+          "*" +
+          level +
+          "*" +
+          item.id
+      );
     }
   };
 
@@ -317,20 +349,33 @@ function BarterForm(props) {
                             {item.subCat}
                           </p>
                           <div style={{ width: "68%" }} title={+item.level}>
-                            <Slider
-                              defaultValue={+item.level}
-                              step={1}
-                              marks
-                              min={1}
-                              max={10}
-                              disabled
-                            />
+                            {upgradeKey === key ? (
+                              <Slider
+                                defaultValue={+item.level}
+                                step={1}
+                                marks
+                                min={1}
+                                max={10}
+                                valueLabelDisplay="auto"
+                                onChangeCommitted={(event, newValue) => {
+                                  upgradeSkill(newValue, item);
+                                }}
+                              />
+                            ) : (
+                              <Slider
+                                defaultValue={+item.level}
+                                step={1}
+                                marks
+                                min={1}
+                                max={10}
+                                disabled
+                              />
+                            )}
                           </div>
                           <div className="ms-3">
                             <IconButton
-                              aria-label="delete"
                               onClick={() => deleteKnowledge(item.id)}
-                              className="text-danger badge text-center mx-2 btnLog align-self-baseline"
+                              className="text-danger badge text-center btnLog align-self-baseline"
                               title="Delete Skill"
                               style={{
                                 width: "42px",
@@ -340,6 +385,40 @@ function BarterForm(props) {
                             >
                               <i className="fa fa-trash" aria-hidden="true"></i>
                             </IconButton>
+                          </div>
+                          <div>
+                            {item.level == 10 ? (
+                              <IconButton
+                                className="text-center btnLog align-self-baseline"
+                                style={{
+                                  width: "42px",
+                                  padding: "5px 6px 8px 5px",
+                                  marginTop: 0,
+                                }}
+                                disabled
+                              >
+                                <i
+                                  className="fa fa-arrow-circle-up text-secondary"
+                                  aria-hidden="true"
+                                ></i>
+                              </IconButton>
+                            ) : (
+                              <IconButton
+                                onClick={() => setUpgradeKey(key)}
+                                className="text-center btnLog align-self-baseline"
+                                title="Upgrade Skill"
+                                style={{
+                                  width: "42px",
+                                  padding: "5px 6px 8px 5px",
+                                  marginTop: 0,
+                                }}
+                              >
+                                <i
+                                  className="fa fa-arrow-circle-up"
+                                  aria-hidden="true"
+                                ></i>
+                              </IconButton>
+                            )}
                           </div>
                         </div>
                       ))}

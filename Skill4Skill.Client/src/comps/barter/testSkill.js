@@ -15,7 +15,7 @@ function TestSkill(props) {
   const [user, setUser] = useState({});
   const [catName, setCatName] = useState({});
   const nav = useNavigate();
-  const [timeLeft, setTimeLeft] = useState(25); // time for each question
+  const [timeLeft, setTimeLeft] = useState(13); // time for each question
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
 
@@ -39,8 +39,6 @@ function TestSkill(props) {
   const doApi = async () => {
     try {
       const parts = params.data.split("*");
-      console.log(parts);
-      
       const inputSubCat = parts[0];
       const catNumber = parts[1];
       const levelParam = parts[2];
@@ -78,7 +76,7 @@ function TestSkill(props) {
   const handleNextQuestion = () => {
     if (currentQuestion < questions.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
-      setTimeLeft(3);
+      setTimeLeft(13);
     } else {
       let correctAnswersCount = 0;
       for (let i = 0; i < questions.questions.length; i++) {
@@ -112,18 +110,26 @@ function TestSkill(props) {
       const inputSubCat = parts[0];
       const catNumber = parts[1];
       const level = parts[2];
+      const idCheck = parts[3];
       let obj = {};
       obj["catNum"] = catNumber;
       obj["subCat"] = inputSubCat;
       obj["level"] = level;
-      obj["id"] = Math.floor(Math.random() * 9999999);
       let tempUser = { ...user };
-      tempUser.knowledge.push(obj);
+      if (idCheck) {
+        let index = tempUser.knowledge.findIndex((item) => item.id == idCheck);
+        obj["id"] = idCheck;
+        tempUser.knowledge[index] = obj;
+      } else {
+        obj["id"] = Math.floor(Math.random() * 9999999);
+        tempUser.knowledge.push(obj);
+      }
       let url = API_URL + "/users/" + user._id;
       try {
         let resp = await doApiMethod(url, "PUT", tempUser);
         if (resp.data.modifiedCount) {
-          toast.success("The skill was added!");
+          if (idCheck) toast.success("Skill updated successfully!");
+          else toast.success("The skill was added!");
           nav(-1);
         } else {
           toast.warning("you not change nothing");
@@ -194,7 +200,9 @@ function TestSkill(props) {
                   {questions.questions[currentQuestion].options[2]}
                 </label>
               </div>
-              <button className="btn" onClick={handleNextQuestion}>Next</button>
+              <button className="btn" onClick={handleNextQuestion}>
+                Next
+              </button>
               <div className="timer">
                 <div className="text-wrapper-4">Time Left:</div>
                 <div className="text-wrapper-5">{timeLeft}</div>

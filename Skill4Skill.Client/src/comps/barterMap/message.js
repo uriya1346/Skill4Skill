@@ -22,7 +22,7 @@ function Message() {
           <FaMap />
         </span>
       </h1>
-      <h3 className="mt-4 mb-4 p-4">
+      <h3>
         Discover and connect with learners near you!
       </h3>
       <h5>

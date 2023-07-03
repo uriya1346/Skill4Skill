@@ -5,6 +5,7 @@ import { AppContext } from "../../context/shopContext";
 import { Rating, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import AuthClientComp from "./authClientComp";
 
 function MyConnections(props) {
   let item = props.item;
@@ -76,6 +77,7 @@ function MyConnections(props) {
 
   return (
     <div>
+      <AuthClientComp/>
       {reviewFlag ? (
         <div className="message">
           <h1>
@@ -144,7 +146,7 @@ function MyConnections(props) {
           </button>
           <button
             onClick={() => {
-              nav("/chat" + user._id);
+              nav("/chat/" + user._id);
               setShowCart("none")
             }}
             className="btn btn-outline-success badge ms-1"

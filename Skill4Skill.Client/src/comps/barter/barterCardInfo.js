@@ -219,7 +219,7 @@ function BarterCardInfo(props) {
             ) : (
               <button
                 className="btn btn-secondary"
-                onClick={() => nav("/chat" + item.userId)}
+                onClick={() => nav("/chat/" + item.userId)}
               >
                 Message
               </button>
