@@ -13,7 +13,7 @@ exports.auth = (req,res,next) => {
     next();
   }
   catch(err){
-    return res.status(401).json({err:"Token invalid (if you hacker) or expired"});
+    return res.status(401).json({err:"Token invalid or expired"});
   }
 }
 exports.authAdmin = (req,res,next) => {
@@ -32,7 +32,7 @@ exports.authAdmin = (req,res,next) => {
     }  
   }
   catch(err){
-    return res.status(401).json({err:"Token invalid (if you hacker) or expired"});
+    return res.status(401).json({err:"Token invalid or expired"});
   }
 }
 exports.payPalAuth = async (_tokenId, _orderId, _ifRealPay = true) => {
