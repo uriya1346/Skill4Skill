@@ -116,7 +116,7 @@ function Suggestions(props) {
       style={{
         backgroundImage: `url(${user.img_url})`,
         backgroundSize: "cover",
-        backgroundPosition: "center calc(13%)",
+        backgroundPosition: "center",
         height: "200px",
       }}
       className="product-img"

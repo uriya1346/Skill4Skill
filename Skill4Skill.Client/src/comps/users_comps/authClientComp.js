@@ -25,7 +25,6 @@ function AuthClientComp(props) {
     catch (err) {
       toast.warning("You need to log in again.")
       nav("/logout")
-      console.log(err.response);
     }
   }
 

@@ -152,7 +152,7 @@ function BarterCardInfo(props) {
       style={{
         backgroundImage: `url(${item.img})`,
         backgroundSize: "cover",
-        backgroundPosition: "center calc(13%)",
+        backgroundPosition: "center",
         height: "200px",
       }}
       className="product-img"

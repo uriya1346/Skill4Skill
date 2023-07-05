@@ -4,6 +4,7 @@ import { BeatLoader } from "react-spinners";
 import BarterCardInfo from "./barterCardInfo";
 import Suggestions from "./suggestions";
 import { Link } from "react-router-dom";
+import AuthClientComp from "../users_comps/authClientComp";
 
 function BarterMain(props) {
   const [ar, setAr] = useState([]);
@@ -55,6 +56,7 @@ function BarterMain(props) {
 
   return (
     <div className="container-fluid py-1" style={{ overflow: "hidden", minHeight: "100vh" }}>
+      <AuthClientComp/>
     <div className="container categories_list py-5">
       <h2 className="text-center gradi text-uppercase">
         <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
