@@ -49,10 +49,10 @@ function ClientHeader(props) {
               </Link>
               <Link onClick={() => setOpen(false)} to="/groupCat">
                 <i
-                  className="fa fa-users me-2 d-block text-center"
+                  className="fa fa-first-order me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
-                Categories
+                Ai Syllabus
               </Link>
               <Link onClick={() => setOpen(false)} to="/barter">
                 <i

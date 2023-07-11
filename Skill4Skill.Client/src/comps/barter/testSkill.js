@@ -201,7 +201,9 @@ function TestSkill(props) {
                 </label>
               </div>
               <button className="btn" onClick={handleNextQuestion}>
-                Next
+                {currentQuestion === questions.questions.length - 1
+                  ? "Submit"
+                  : "Next"}
               </button>
               <div className="timer">
                 <div className="text-wrapper-4">Time Left:</div>

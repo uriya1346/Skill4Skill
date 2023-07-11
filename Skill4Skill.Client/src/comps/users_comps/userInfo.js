@@ -65,7 +65,6 @@ function UserInfo(props) {
     setUser(resp.data);
     if (resp.data.role !== "admin" || resp.data.role !== "premium") {
       setUserRoleFlag(true);
-      console.log(12123432);
     }
   };
 
