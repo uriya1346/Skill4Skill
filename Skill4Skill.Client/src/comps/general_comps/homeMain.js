@@ -196,7 +196,7 @@ function HomeMain(props) {
         </div>
       </div>
       <section className="testimonials">
-        <h1>
+        <h1 id="reviews">
           What Our Customers Says
           <i className="ms-2 fa fa-comments" aria-hidden="true"></i>
         </h1>

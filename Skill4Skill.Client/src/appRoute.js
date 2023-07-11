@@ -10,6 +10,7 @@ import Page404 from "./comps/general_comps/page404";
 import Contact from "./comps/general_comps/contact";
 import Home from "./comps/general_comps/home";
 import AboutUs from "./comps/general_comps/aboutUs";
+import FAQ from "./comps/general_comps/FAQ";
 
 // Admin Components
 import LoginAdmin from "./comps_admin/general_admin/loginAdmin";
@@ -90,6 +91,7 @@ function AppRoute(props) {
           {/* USER script */}
           <Route index element={<Home />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/login" element={<LogInClient />} />
           <Route path="/login/forgotPassword" element={<ForgotPassword />} />

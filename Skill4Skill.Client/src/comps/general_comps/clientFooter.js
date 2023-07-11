@@ -87,8 +87,8 @@ function ClientFooter(props) {
                 </a>
               </li>
               <li>
-                <a href="/careers" className="text-white">
-                  Careers
+                <a href="/#reviews" className="text-white">
+                  Reviews
                 </a>
               </li>
               <li>
