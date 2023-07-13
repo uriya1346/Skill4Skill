@@ -1,0 +1,92 @@
+.cart {
+  position: fixed;
+  top: 70px;
+  right: 0%;
+  width: 350px;
+  max-height: 60vh;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  border: 1px solid silver;
+  color: #fff;
+  z-index: 999;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.5s ease-in-out;
+  min-height: 50vh;
+}
+
+.close-btn {
+  margin-left: 88%;
+}
+
+.cart-tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cart-tab {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;  
+}
+
+.cart-tab .request-count {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  padding: 4px 8px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cart-tab-active {
+  border-bottom: 3px solid #fff;
+}
+
+.cart-content {
+  padding: 10px;
+}
+
+.cart-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+li a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .cart {
+    width: 100%;
+    top: 85px;
+    min-height: 90%;
+  }
+  .close-btn {
+    margin-left: 90%;
+  }
+}
