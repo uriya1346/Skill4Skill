@@ -50,46 +50,60 @@ function BarterMain(props) {
     setAr(array);
     let url2 = API_URL + "/barter/suggestions";
     let resp2 = await doApiGet(url2);
-    setSuggestionsAr(resp2.data);
-    setLoadingFlag(true)
+    let suggestions = resp2.data;
+    suggestions = suggestions.filter((suggestion) => {
+      return !resp.data.some((item) => item.userId === suggestion.id);
+    });
+
+    setSuggestionsAr(suggestions);
+    setLoadingFlag(true);
   };
 
   return (
-    <div className="container-fluid py-1" style={{ overflow: "hidden", minHeight: "100vh" }}>
-      <AuthClientComp/>
-    <div className="container categories_list py-5">
-      <h2 className="text-center gradi text-uppercase">
-        <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
-        Your Adjustments
-      </h2>
-      <div className="row mt-5">
-        {ar.map((item, index) => (
-          <BarterCardInfo key={index} item={item} />
-        ))}
+    <div
+      className="container-fluid py-1"
+      style={{ overflow: "hidden", minHeight: "100vh" }}
+    >
+      <AuthClientComp />
+      <div className="container categories_list py-5">
+        {ar.length > 0 && (
+          <div>
+            <h2 className="text-center gradi text-uppercase">
+              <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
+              Matched Barters
+            </h2>
+            <div className="row mt-5">
+              {ar.map((item, index) => (
+                <BarterCardInfo key={index} item={item} />
+              ))}
+            </div>
+          </div>
+        )}
+        {suggestionsAr.length > 0 && <div>
+          <hr className="my-5" />
+          <h2 className="text-center gradi text-uppercase">
+            <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
+            Suggestions
+          </h2>
+          {!loadingFlag ? (
+            <div className="text-center mt-4">
+              <BeatLoader />
+            </div>
+          ) : (
+            <div className="row mt-5">
+              {suggestionsAr.map((item, index) => (
+                <Suggestions key={index} item={item} />
+              ))}
+            </div>
+          )}
+        </div>}
       </div>
-      <hr className="my-5" />
-      <h2 className="text-center gradi text-uppercase">
-        <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
-        Suggestions for You
-      </h2>
-      {!loadingFlag ? (
-        <div className="text-center mt-4">
-          <BeatLoader />
-        </div>
-      ) : (
-        <div className="row mt-5">
-          {suggestionsAr.map((item, index) => (
-            <Suggestions key={index} item={item} />
-          ))}
-        </div>
-      )}
+      <div className="text-center py-5">
+        <Link to="/barterForm" className="btn btn-warning btn-lg">
+          Edit Skills and Preferences
+        </Link>
+      </div>
     </div>
-    <div className="text-center py-5">
-      <Link to="/barterForm" className="btn btn-warning btn-lg">
-        Edit Preferences and Knowledge
-      </Link>
-    </div>
-  </div>
   );
 }
 
