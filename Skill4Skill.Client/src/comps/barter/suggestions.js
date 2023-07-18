@@ -10,13 +10,16 @@ import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { motion } from "framer-motion";
+import { PopupContext } from '../../context/shopContext';
+import { useContext } from "react";
 
 function Suggestions(props) {
   const [user, setUser] = useState({});
   const [myUser, setMyUser] = useState({});
-  const [popup, setPopup] = useState();
   const [raitingAvg, setRaitingAvg] = useState(0);
   const [alreadyConnect, setAlreadyConnect] = useState(false);
+  const { activePopup, setActivePopup } = useContext(PopupContext);
   const nav = useNavigate();
   let item = props.item;
 
@@ -27,18 +30,18 @@ function Suggestions(props) {
   const doApi = async () => {
     let url = API_URL + "/users/single/" + item.id;
     let resp = await doApiGet(url);
-    resp.data.match = item.match
-    resp.data.match = item.match
-    resp.data.reason = item.reason
+    resp.data.match = item.match;
+    resp.data.match = item.match;
+    resp.data.reason = item.reason;
     let sumRating = 0;
     resp.data.reviews.forEach((review) => {
       sumRating += review.raiting;
     });
     setRaitingAvg(sumRating / resp.data.reviews.length);
-    setUser(resp.data)
+    setUser(resp.data);
     let url2 = API_URL + "/users/myInfo";
     let resp2 = await doApiGet(url2);
-    setMyUser(resp2.data)
+    setMyUser(resp2.data);
   };
 
   const connectUser = async (id) => {
@@ -101,100 +104,108 @@ function Suggestions(props) {
     return <div>Loading...</div>;
   } else
     return (
-<div className="product-item col-md-4 p-3">
-  <div
-    className="card shadow text-center h-100"
-    onClick={async (e) => {
-      e.preventDefault();
-      setPopup(true);
-      let connectFlag = await checkIfAlreadyConnect(user._id);
-      setAlreadyConnect(connectFlag);
-    }}
-    style={{ cursor: "pointer" }}
-  >
-    <div
-      style={{
-        backgroundImage: `url(${user.img_url})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "200px",
-      }}
-      className="product-img"
-    ></div>
-    <div className="card-body">
-      <h4 className="card-title text-primary">
-        {user.first_name} {user.last_name}
-      </h4>
-      <p className="card-text text-center">
-        Match: {user.match}
-      </p>
-    </div>
-  </div>
-  {popup ? (
-    <div className="card-product" style={{ zIndex: "99" }}>
-      <Card
-        sx={{
-          minWidth: 250,
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <CardMedia
-          component="img"
-          height="150"
-          image={user.img_url}
-          alt={user.first_name}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {user.first_name} {user.last_name}
-          </Typography>
-          <Typography variant="body2" component="div">
-            <Rating value={raitingAvg} precision={1} readOnly />
-          </Typography>
-          <Typography variant="body2" component="div">
-            <strong>Match: </strong>
-            {user.match}
-          </Typography>
-          <Typography variant="body2" component="div">
-            <strong>Reason: </strong>
-            {user.reason}
-          </Typography>
-          <div className="text-center mt-3">
-            {alreadyConnect ? (
-              <button
-                className="btn btn-primary"
-                onClick={() => connectUser(user._id)}
-              >
-                Connect
-              </button>
-            ) : (
-              <button
-                className="btn btn-secondary"
-                onClick={() => nav("/chat/" + user._id)}
-              >
-                Message
-              </button>
-            )}
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="large"
-            onClick={() => setPopup(false)}
+      <div className="product-item col-md-4 p-3">
+        <motion.div
+          className="card shadow text-center h-100"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            cursor: "pointer",
+            perspective: "1500px",
+            backgroundColor: "#000",
+            color: "#ffffff",
+          }}
+          onClick={async (e) => {
+            e.preventDefault();
+            let connectFlag = await checkIfAlreadyConnect(user._id);
+            setAlreadyConnect(connectFlag);
+            setActivePopup(props.index); 
+          }}
+        >
+          <div
             style={{
-              position: "absolute",
-              top: "0",
-              left: "78%",
-              color: "red",
+              backgroundImage: `url(${user.img_url})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "200px",
             }}
+            className="product-img"
+          ></div>
+          <div className="card-body">
+            <h4 className="card-title">
+              {user.first_name} {user.last_name}
+            </h4>
+            <p className="card-text text-center">Match: {user.match}</p>
+          </div>
+        </motion.div>
+        {activePopup === props.index ? (
+          <motion.div
+            className="card-product"
+            animate={{ x: [0, 100, 0] }}
           >
-            <i className="fa fa-times" aria-hidden="true"></i>
-          </Button>
-        </CardActions>
-      </Card>
-    </div>
-  ) : null}
-</div>
+            <Card
+              sx={{
+                minWidth: 250,
+                boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="150"
+                image={user.img_url}
+                alt={user.first_name}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {user.first_name} {user.last_name}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <Rating value={raitingAvg} precision={1} readOnly />
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>Match: </strong>
+                  {user.match}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>Reason: </strong>
+                  {user.reason}
+                </Typography>
+                <div className="text-center mt-3">
+                  {alreadyConnect ? (
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => connectUser(user._id)}
+                    >
+                      Connect
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => nav("/chat/" + user._id)}
+                    >
+                      Message
+                    </button>
+                  )}
+                </div>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="large"
+                  onClick={() => setActivePopup(null)}
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "78%",
+                    color: "red",
+                  }}
+                >
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </Button>
+              </CardActions>
+            </Card>
+          </motion.div>
+        ) : null}
+      </div>
     );
 }
 

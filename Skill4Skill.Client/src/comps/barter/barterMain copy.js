@@ -5,13 +5,11 @@ import BarterCardInfo from "./barterCardInfo";
 import Suggestions from "./suggestions";
 import { Link } from "react-router-dom";
 import AuthClientComp from "../users_comps/authClientComp";
-import { PopupContext } from '../../context/shopContext';
 
 function BarterMain(props) {
   const [ar, setAr] = useState([]);
   const [loadingFlag, setLoadingFlag] = useState(false);
   const [suggestionsAr, setSuggestionsAr] = useState([]);
-  const [activePopup, setActivePopup] = useState(null); 
   useEffect(() => {
     doApi();
   }, []);
@@ -56,16 +54,18 @@ function BarterMain(props) {
     suggestions = suggestions.filter((suggestion) => {
       return !resp.data.some((item) => item.userId === suggestion.id);
     });
-    
+
     setSuggestionsAr(suggestions);
     setLoadingFlag(true);
   };
 
   return (
-    <PopupContext.Provider value={{ activePopup, setActivePopup }}>
-    <div className="barter-main-container">
+    <div
+      className="container-fluid py-1"
+      style={{ overflow: "hidden", minHeight: "100vh" }}
+    >
       <AuthClientComp />
-      <div className="container categories-list py-5">
+      <div className="container categories_list py-5">
         {ar.length > 0 && (
           <div>
             <h2 className="text-center gradi text-uppercase">
@@ -74,31 +74,29 @@ function BarterMain(props) {
             </h2>
             <div className="row mt-5">
               {ar.map((item, index) => (
-                <BarterCardInfo key={index} item={item} index={item.userId+"bar"}/>
+                <BarterCardInfo key={index} item={item} />
               ))}
             </div>
           </div>
         )}
-        {suggestionsAr.length > 0 && (
-          <div>
-            <hr className="my-5" />
-            <h2 className="text-center gradi text-uppercase">
-              <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
-              Suggestions
-            </h2>
-            {!loadingFlag ? (
-              <div className="text-center mt-4">
-                <BeatLoader />
-              </div>
-            ) : (
-              <div className="row mt-5">
-                {suggestionsAr.map((item, index) => (
-                  <Suggestions key={index} item={item} index={item.id+"sug"}/>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        {suggestionsAr.length > 0 && <div>
+          <hr className="my-5" />
+          <h2 className="text-center gradi text-uppercase">
+            <i className="fa fa-lastfm me-3" aria-hidden="true"></i>
+            Suggestions
+          </h2>
+          {!loadingFlag ? (
+            <div className="text-center mt-4">
+              <BeatLoader />
+            </div>
+          ) : (
+            <div className="row mt-5">
+              {suggestionsAr.map((item, index) => (
+                <Suggestions key={index} item={item} />
+              ))}
+            </div>
+          )}
+        </div>}
       </div>
       <div className="text-center py-5">
         <Link to="/barterForm" className="btn btn-warning btn-lg">
@@ -106,7 +104,6 @@ function BarterMain(props) {
         </Link>
       </div>
     </div>
-    </PopupContext.Provider>
   );
 }
 

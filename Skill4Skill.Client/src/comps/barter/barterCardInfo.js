@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,6 +10,9 @@ import "../css/productDesign.css";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { PopupContext } from '../../context/shopContext';
+
 
 function BarterCardInfo(props) {
   const [catInfo, setCatInfo] = useState({});
@@ -18,6 +21,7 @@ function BarterCardInfo(props) {
   const [catOfferInfo, setCatOfferInfo] = useState([]);
   const [popup, setPopup] = useState();
   const [alreadyConnect, setAlreadyConnect] = useState(false);
+  const { activePopup, setActivePopup } = useContext(PopupContext);
   const nav = useNavigate();
   let item = props.item;
 
@@ -91,7 +95,11 @@ function BarterCardInfo(props) {
       }
     });
     if (!flag) return;
-    if (user.connections.length > 2 && user.role !== "admin" && user.role !== "premium") {
+    if (
+      user.connections.length > 2 &&
+      user.role !== "admin" &&
+      user.role !== "premium"
+    ) {
       toast.warning("you need to get a premium user to send more connections");
       nav("/checkoutPremium");
       return;
@@ -137,113 +145,123 @@ function BarterCardInfo(props) {
     return flag;
   };
   return (
-<div className="product-item col-md-4 p-3">
-  <div
-    className="card shadow text-center h-100"
-    onClick={async (e) => {
-      e.preventDefault();
-      setPopup(true);
-      let connectFlag = await checkIfAlreadyConnect(item.userId);
-      setAlreadyConnect(connectFlag);
-    }}
-    style={{ cursor: "pointer" }}
-  >
-    <div
-      style={{
-        backgroundImage: `url(${item.img})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "200px",
-      }}
-      className="product-img"
-    ></div>
-    <div className="card-body">
-      <h4 className="card-title text-primary">{item.name}</h4>
-      <p className="card-text text-center">
-        {catInfo.name} - {item.subCat}
-      </p>
-    </div>
-  </div>
-  {popup ? (
-    <div className="card-product">
-      <Card
-        sx={{
-          minWidth: 250,
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    <div className="product-item col-md-4 p-3">
+      <motion.div
+        className="card shadow text-center h-100"
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.5 }}
+        style={{
+          cursor: "pointer",
+          perspective: "1500px",
+          backgroundColor: "#000",
+          color: "#ffffff",
+        }}
+        onClick={async (e) => {
+          e.preventDefault();
+          let connectFlag = await checkIfAlreadyConnect(item.userId);
+          setAlreadyConnect(connectFlag);
+          setActivePopup(props.index); 
         }}
       >
-        <CardMedia
-          component="img"
-          height="150"
-          image={item.img}
-          alt={item.name}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.name}
-          </Typography>
-          <Typography gutterBottom variant="" component="div">
-            <Rating value={raitingAvg} precision={1} readOnly />
-          </Typography>
-          <Typography gutterBottom variant="" component="div">
-            <strong>Connections:</strong> {user.connections.length}
-          </Typography>
-          <Typography gutterBottom variant="" component="div">
-            <strong>Teaching Categories:</strong> {catInfo.name}
-          </Typography>
-          <Typography gutterBottom variant="" component="div">
-            <strong>Teaching Subjects:</strong> {item.subCat}
-            <Typography
-              gutterBottom
-              variant=""
-              component="div"
-              className="mt-2"
-            >
-              I can offer: <br />
-              <strong>Offering Categories:</strong> {catOfferInfo.name}
-              <br />
-              <strong>Offering Subjects:</strong> {item.canOfferSubCat}
-            </Typography>
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {item.des}
-          </Typography>
-          <div className="text-center mt-3">
-            {alreadyConnect ? (
-              <button
-                className="btn btn-primary"
-                onClick={() => connectUser(item.userId)}
-              >
-                Connect
-              </button>
-            ) : (
-              <button
-                className="btn btn-secondary"
-                onClick={() => nav("/chat/" + item.userId)}
-              >
-                Message
-              </button>
-            )}
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="large"
-            onClick={() => setPopup(false)}
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "78%",
-              color: "red",
+        <div
+          style={{
+            backgroundImage: `url(${item.img})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "200px",
+          }}
+          className="product-img"
+        ></div>
+        <div className="card-body">
+          <h4 className="card-title">{item.name}</h4>
+          <p className="card-text text-center">
+            {catInfo.name} - {item.subCat}
+          </p>
+        </div>
+      </motion.div>
+      {activePopup === props.index ? (
+        <motion.div
+          className="card-product"
+          animate={{ x: [0, 100, 0] }}
+        >
+          <Card
+            sx={{
+              minWidth: 250,
+              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <i className="fa fa-times" aria-hidden="true"></i>
-          </Button>
-        </CardActions>
-      </Card>
+            <CardMedia
+              component="img"
+              height="150"
+              image={item.img}
+              alt={item.name}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {item.name}
+              </Typography>
+              <Typography gutterBottom variant="" component="div">
+                <Rating value={raitingAvg} precision={1} readOnly />
+              </Typography>
+              <Typography gutterBottom variant="" component="div">
+                <strong>Connections:</strong> {user.connections.length}
+              </Typography>
+              <Typography gutterBottom variant="" component="div">
+                <strong>Teaching Categories:</strong> {catInfo.name}
+              </Typography>
+              <Typography gutterBottom variant="" component="div">
+                <strong>Teaching Subjects:</strong> {item.subCat}
+                <Typography
+                  gutterBottom
+                  variant=""
+                  component="div"
+                  className="mt-2"
+                >
+                  I can offer: <br />
+                  <strong>Offering Categories:</strong> {catOfferInfo.name}
+                  <br />
+                  <strong>Offering Subjects:</strong> {item.canOfferSubCat}
+                </Typography>
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {item.des}
+              </Typography>
+              <div className="text-center mt-3">
+                {alreadyConnect ? (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => connectUser(item.userId)}
+                  >
+                    Connect
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => nav("/chat/" + item.userId)}
+                  >
+                    Message
+                  </button>
+                )}
+              </div>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="large"
+                onClick={() => setActivePopup(null)}
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  left: "78%",
+                  color: "red",
+                }}
+              >
+                <i className="fa fa-times" aria-hidden="true"></i>
+              </Button>
+            </CardActions>
+          </Card>
+        </motion.div>
+      ) : null}
     </div>
-  ) : null}
-</div>
   );
 }
 
