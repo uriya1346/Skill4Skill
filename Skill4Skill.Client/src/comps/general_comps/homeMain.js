@@ -158,7 +158,7 @@ function HomeMain(props) {
             </div>
           </Link> */}
           <Link to={"/barter"} className="myCard col-md-6 p-3">
-            <div className="shadow bg-dark gradi">
+            <div className="shadow link-card gradi">
               <div
                 style={{ backgroundImage: `url("/images/cooperative.webp")` }}
                 className="img_card"
@@ -167,7 +167,7 @@ function HomeMain(props) {
             </div>
           </Link>
           <Link to={"/barterMap"} className="myCard col-md-6 p-3">
-            <div className="shadow bg-dark gradi">
+            <div className="shadow link-card gradi">
               <div
                 style={{ backgroundImage: `url("/images/barterMap.jpg")` }}
                 className="img_card"
@@ -176,7 +176,7 @@ function HomeMain(props) {
             </div>
           </Link>
           <Link to={"/aboutUs"} className="myCard col-md-6 p-3">
-            <div className="shadow bg-dark gradi">
+            <div className="shadow link-card gradi">
               <div
                 style={{ backgroundImage: `url("/images/aboutUs.jpg")` }}
                 className="img_card"
@@ -185,7 +185,7 @@ function HomeMain(props) {
             </div>
           </Link>
           <Link to={"/contact"} className="myCard col-md-6 p-3">
-            <div className="shadow bg-dark gradi">
+            <div className="shadow link-card gradi">
               <div
                 style={{ backgroundImage: `url("/images/contact.webp")` }}
                 className="img_card"

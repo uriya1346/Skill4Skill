@@ -1,6 +1,6 @@
 .strip_home{
   min-height: 400px;
-  background: #808080; /* Changed color to gray */
+  background: #808080;
   background-size: cover;
   background-position:center center;
 }
@@ -20,7 +20,6 @@
 
 .categories_list .myCard .img_card{
   min-height: 150px;
-  background: #808080; /* Changed color to gray */
   background-size: cover;
   background-position:center center;
 }

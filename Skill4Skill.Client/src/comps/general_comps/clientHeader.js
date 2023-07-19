@@ -24,11 +24,11 @@ function ClientHeader(props) {
       <div className="container">
         <nav className=" navbar navbar-expand-md navbar-light ">
           <Link onClick={() => setOpen(false)} to="/">
-            <img src="/images/logo-no-background.png" height={"25vh"} alt="logo-no-background"/>
+            <img src="/images/logo.png" height={"25vh"} alt="logo-no-background"/>
           </Link>
           <button
-            style={{ borderRadius: "24px 8px", color: "#00BFFF" }}
-            className="navbar-toggler btn"
+            style={{ borderRadius: "24px 8px", color: "#ff1414" }}
+            className="navbar-toggler btn hmb-btn"
             onClick={() => setOpen(!isOpen)}
           >
             <Hamburger toggled={isOpen} toggle={setOpen} />
@@ -52,7 +52,7 @@ function ClientHeader(props) {
                   className="fa fa-first-order me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
-                Ai Syllabus
+                Syllabus
               </Link>
               <Link onClick={() => setOpen(false)} to="/barter">
                 <i
@@ -88,7 +88,7 @@ function ClientHeader(props) {
                       className="fa fa-pencil me-2 d-block text-center"
                       aria-hidden="true"
                     ></i>
-                    My User
+                    User
                   </Link>
                   <Link
                    to={location.pathname}

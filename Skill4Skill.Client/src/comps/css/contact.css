@@ -17,9 +17,7 @@
 }
 
   .contact .content p{
-    font-weight: 300;
-    color: #333333;
-    text-shadow: 0.5px  0.5px #00BFFF;
+    font-weight: 500;
   }
   .containerd{
     width: 100%;

@@ -20,20 +20,23 @@ header.sticky{
 }
 
 .header-client nav a{
-  color:rgb(255, 255, 255);
+  color:#f0e4db;
   padding:0 12px;
   text-decoration: none;
 }
 
 
 .header-client nav  a:hover{
-  color: #00BFFF;
+  background: linear-gradient(87.75deg, #ff1414, #ff9314);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 
 .footer-client {
   background-color: #f5f5f5;
   padding: 50px 0;
+  
 }
 
 .footer-client h4 {
@@ -107,7 +110,9 @@ header.sticky{
 }
 
 .btnEditHeader:hover{
-  color: #00BFFF!important;
+  background: linear-gradient(87.75deg, #ff1414, #ff9314);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .link-button {

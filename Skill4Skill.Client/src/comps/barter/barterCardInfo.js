@@ -153,8 +153,7 @@ function BarterCardInfo(props) {
         style={{
           cursor: "pointer",
           perspective: "1500px",
-          backgroundColor: "#000",
-          color: "#ffffff",
+          backgroundColor: "#FDF5E6",
         }}
         onClick={async (e) => {
           e.preventDefault();
@@ -173,7 +172,7 @@ function BarterCardInfo(props) {
           className="product-img"
         ></div>
         <div className="card-body">
-          <h4 className="card-title">{item.name}</h4>
+          <h4 className="fire-color">{item.name}</h4>
           <p className="card-text text-center">
             {catInfo.name} - {item.subCat}
           </p>

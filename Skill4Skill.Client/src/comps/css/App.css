@@ -6,10 +6,12 @@
 }
 
 body {
-  background: linear-gradient(90deg, #33ccff 0%, #99ccff 100%, #33ccff 100%);
-  color: #333333;
+  /* background: linear-gradient(160.6deg, #eef9fe, hsl(24, 100%, 77%)) !important; */
+  /* background: linear-gradient(90deg, #eef9fe 0%, #eef9fe 100%, #eef9fe 100%); ; */
+  /* background: linear-gradient(90deg, #33ccff 0%, #99ccff 100%, #33ccff 100%); */
+  background: linear-gradient(#f0e4db, #eef9fe );
+  color: #3b2a2a;
 }
-
 .btnLog {
   background: #333333;
   color: white;
@@ -22,6 +24,11 @@ body {
   font-family: 'Bonheur Royale', cursive;
   border-radius: 5px;
   margin-top: 20px;
+}
+.fire-color{
+  background: linear-gradient(87.75deg, #ff1414, #ff9314);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .btnLog:hover {
@@ -90,7 +97,9 @@ body {
 }
 
 i {
-  color: #00BFFF;
+  background: linear-gradient(87.75deg, #ff1414, #ff9314);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 form.form-design {
@@ -122,10 +131,6 @@ form.form-design {
 }
 
 @media (max-width: 768px) {
-  body {
-    background: #F5F5F5;
-    background: linear-gradient(to bottom, #33ccff, #99ccff);
-  }
 
   .btnLog,
   .btnDesign {

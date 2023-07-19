@@ -112,8 +112,7 @@ function Suggestions(props) {
           style={{
             cursor: "pointer",
             perspective: "1500px",
-            backgroundColor: "#000",
-            color: "#ffffff",
+          backgroundColor: "#FDF5E6",
           }}
           onClick={async (e) => {
             e.preventDefault();
@@ -132,7 +131,7 @@ function Suggestions(props) {
             className="product-img"
           ></div>
           <div className="card-body">
-            <h4 className="card-title">
+            <h4 className="fire-color">
               {user.first_name} {user.last_name}
             </h4>
             <p className="card-text text-center">Match: {user.match}</p>
