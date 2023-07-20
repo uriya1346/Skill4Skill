@@ -66,12 +66,18 @@ function BarterMain(props) {
     <PopupContext.Provider value={{ activePopup, setActivePopup }}>
       <div className="barter-main-container">
         <AuthClientComp />
-      <div className={styles.toshjmoshAStunning3dCartooParent}>
+        <div className={styles.toshjmoshAStunning3dCartooParent}>
+        <img
+          className={styles.toshjmoshAStunning3dCartooIcon}
+          alt=""
+          src="images/avatar/three.png"
+        />
         <img
           className={styles.toshjmoshAStunning3dCartooIcon1}
           alt=""
-          src="images/home/toshjmosh-a-stunning-3d-cartoon-illustration-of-a-male-student--1d5b097ccf94409ea42c6d171d839dc8@2x.png"
+          src="images/avatar/four.png"
         />
+        <div className={styles.groupChild} />
       </div>
         <div className="container categories-list py-5">
           {ar.length > 0 && (

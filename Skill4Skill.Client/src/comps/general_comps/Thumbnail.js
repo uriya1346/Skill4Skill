@@ -7,7 +7,7 @@ const Thumbnail = () => {
         <p className={styles.illustrations}>
           <span className={styles.illustrations1}>
             <span className={styles.span}>{` `}</span>
-            <span className={styles.illustrations2}>Illustrations</span>
+            <span className={styles.illustrations2}>School</span>
           </span>
         </p>
       </b>
@@ -18,12 +18,12 @@ const Thumbnail = () => {
         <img
           className={styles.toshjmoshAStunning3dCartooIcon}
           alt=""
-          src="images/home/toshjmosh-a-stunning-3d-cartoon-illustration-of-a-female-studen-cbfe8361841b47b487f5310e8b96eb6a@2x.png"
+          src="images/avatar/two.png"
         />
         <img
           className={styles.toshjmoshAStunning3dCartooIcon1}
           alt=""
-          src="images/home/toshjmosh-a-stunning-3d-cartoon-illustration-of-a-male-student--1d5b097ccf94409ea42c6d171d839dc8@2x.png"
+          src="images/avatar/one.png"
         />
         <div className={styles.groupChild} />
       </div>

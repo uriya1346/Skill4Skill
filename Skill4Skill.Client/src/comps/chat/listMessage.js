@@ -2,15 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { sortBy } from "lodash";
 import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import "./../css/chat.css";
-
 
 const socket = socketIOClient(API_URL);
 function ListMessage() {
   const params = useParams();
-  const [id] = useState(params.id);
+  const [id, setId] = useState(params.id);
   const [arChat, setArChat] = useState([]);
   const [userObj, setUserObj] = useState({});
   const [text, setText] = useState("");
@@ -23,14 +22,18 @@ function ListMessage() {
   }, [arChat]);
 
   useEffect(() => {
+    setId(params.id);
+  }, [params.id]);
+
+  useEffect(() => {
     socket.on("nodeJsEvent", handleIncomingMessage);
     return () => socket.off("nodeJsEvent", handleIncomingMessage);
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     doApiUserObj();
     doApi();
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
     const url = `${API_URL}/chat/userMessage/${id}`;
@@ -72,10 +75,10 @@ function ListMessage() {
     const url = `${API_URL}/chat/${id}`;
     const body = { Message: text };
     try {
-      setLoading(true)
+      setLoading(true);
       const { data } = await doApiMethod(url, "POST", body);
       socket.emit("FromAPI", data.message);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       alert("Error, please try again later.");
       console.log(error);
@@ -85,9 +88,10 @@ function ListMessage() {
   const handleIncomingMessage = (data) => {
     const formattedData = {
       ...data,
-      date_created: `${String(new Date(data.date_created).getHours()).padStart(2, "0")}:${String(
-        new Date(data.date_created).getMinutes()
-      ).padStart(2, "0")}`,
+      date_created: `${String(new Date(data.date_created).getHours()).padStart(
+        2,
+        "0"
+      )}:${String(new Date(data.date_created).getMinutes()).padStart(2, "0")}`,
     };
     setArChat((prevArChat) => [...prevArChat, formattedData]);
   };
@@ -110,7 +114,7 @@ function ListMessage() {
     } else {
       scrollToBottom();
     }
-  },[]);
+  }, []);
 
   return (
     <div className="">
@@ -118,7 +122,8 @@ function ListMessage() {
         <div className="messageitem p-2 my-4 pb-4">
           <button
             onClick={() => {
-              nav(-1)
+              setLoading(false);
+              nav(-1);
             }}
             className="btnClose"
           >
@@ -128,42 +133,45 @@ function ListMessage() {
             <i className="fa fa-lastfm me-2" aria-hidden="true"></i>
             {userObj[id]}
           </p>
-          {loading && <h1>Loading....</h1>}
-          <div
-            ref={chatContainerRef}
-            id="scroll"
-            className="itemlistMessage overflow-auto pr-5"
-          >
-            {arChat.map((item, i) => (
-              <div key={i}>
-                {id === item.sender_id ? (
-                  <div className="float-end messageChat_item mt-3">
-                    <span className="fw-bolder">
-                      {userObj[item.sender_id].toUpperCase()}
-                    </span>
-                    <br />
-                    <span>{item.Message}</span>
-                    <br />
-                    <span className="spans">{item.date_created}</span>
-                    <br />
-                  </div>
-                ) : (
-                  <div className="float-start messageChat_item mt-3">
-                    <span className="fw-bolder">
-                      {userObj[item.sender_id].toUpperCase()}
-                    </span>
-                    <br />
-                    <span>{item.Message}</span>
-                    <br />
-                    <span className="spans">{item.date_created}</span>
-                    <br />
-                  </div>
-                )}
-                <br />
-              </div>
-            ))}
-            <br />
-          </div>
+          {loading ? (
+            <h1>Loading....</h1>
+          ) : (
+            <div
+              ref={chatContainerRef}
+              id="scroll"
+              className="itemlistMessage overflow-auto pr-5"
+            >
+              {arChat.map((item, i) => (
+                <div key={i}>
+                  {id === item.sender_id ? (
+                    <div className="float-end messageChat_item mt-3">
+                      <span className="fw-bolder">
+                        {userObj[item.sender_id].toUpperCase()}
+                      </span>
+                      <br />
+                      <span>{item.Message}</span>
+                      <br />
+                      <span className="spans">{item.date_created}</span>
+                      <br />
+                    </div>
+                  ) : (
+                    <div className="float-start messageChat_item mt-3">
+                      <span className="fw-bolder">
+                        {userObj[item.sender_id].toUpperCase()}
+                      </span>
+                      <br />
+                      <span>{item.Message}</span>
+                      <br />
+                      <span className="spans">{item.date_created}</span>
+                      <br />
+                    </div>
+                  )}
+                  <br />
+                </div>
+              ))}
+              <br />
+            </div>
+          )}
           <div className="emoji d-flex">
             <button
               onClick={() => {
