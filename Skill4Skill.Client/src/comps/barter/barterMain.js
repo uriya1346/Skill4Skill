@@ -54,9 +54,9 @@ function BarterMain(props) {
     let url2 = API_URL + "/barter/suggestions";
     let resp2 = await doApiGet(url2);
     let suggestions = resp2.data;
-    // suggestions = suggestions.filter((suggestion) => {
-    //   return !resp.data.some((item) => item.userId === suggestion.id);
-    // });
+    suggestions = suggestions.filter((suggestion) => {
+      return !resp.data.some((item) => item.userId === suggestion.id);
+    });
 
     setSuggestionsAr(suggestions);
     setLoadingFlag(true);
@@ -66,19 +66,18 @@ function BarterMain(props) {
     <PopupContext.Provider value={{ activePopup, setActivePopup }}>
       <div className="barter-main-container">
         <AuthClientComp />
-        <div className={styles.toshjmoshAStunning3dCartooParent}>
-        <img
-          className={styles.toshjmoshAStunning3dCartooIcon}
-          alt=""
-          src="images/avatar/three.png"
-        />
-        <img
-          className={styles.toshjmoshAStunning3dCartooIcon1}
-          alt=""
-          src="images/avatar/four.png"
-        />
-        <div className={styles.groupChild} />
-      </div>
+        {/* <div className={styles.toshjmoshAStunning3dCartooParent}>
+          <img
+            className={styles.toshjmoshAStunning3dCartooIcon}
+            alt=""
+            src="images/avatar/three.png"
+          />
+          <img
+            className={styles.toshjmoshAStunning3dCartooIcon1}
+            alt=""
+            src="images/avatar/four.png"
+          />
+        </div> */}
         <div className="container categories-list py-5">
           {ar.length > 0 && (
             <div>

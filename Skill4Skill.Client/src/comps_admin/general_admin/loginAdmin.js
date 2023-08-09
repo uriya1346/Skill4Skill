@@ -55,6 +55,7 @@ function LoginAdmin(props){
         <button className='btnLog mt-4 mx-auto'><i className="mx-2 fa fa-sign-in" aria-hidden="true"></i>Login</button>
         </div>
       </form>  
+      <div style={{ minHeight: "17vh" }}></div>
     </div> 
   )
 }

@@ -32,14 +32,14 @@ function RentalCarInfo(props) {
               </h1>
               <p className="text-muted text-center">{group.info}</p>
               <div className="text-center my-5">
-                <img src="/images/logo-no-background.png" height={"35vh"} alt="logo-no-background"/>
+                <img src="/images/logo.png" height={"35vh"} alt="logo-no-background"/>
               </div>
               <div className="d-flex justify-content-center mt-4">
                 <Link
                   className="btn btn-primary mb-3"
                   to={ "/groupInfo/learningPath"+group.name}
                 >
-                  Get a description of a learning path!
+                  Get the learning path!
                 </Link>
               </div>
             </div>

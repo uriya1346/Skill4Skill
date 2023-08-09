@@ -91,7 +91,6 @@ function ClientHeader(props) {
                     User
                   </Link>
                   <Link
-                   to={location.pathname}
                     onClick={() => {
                       setOpen(false);
                       showCart === "none"

@@ -146,7 +146,7 @@ function UsersList(props) {
                     onClick={() => {
                       delUser(item._id);
                     }}
-                    className="badge btn btn-outline-danger mx-5"
+                    className="badge btn btn-outline-danger mx-5 text-dark"
                   >
                     X
                   </button>

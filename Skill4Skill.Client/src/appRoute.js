@@ -84,6 +84,7 @@ function AppRoute(props) {
           />
           <Route path="/admin/addGroupCat" element={<AddGroupCat />} />
           <Route path="/admin/addGroupProduct" element={<AddGroupProduct />} />
+          <Route path="/admin/*" element={<Page404 />} />
         </Route>
 
         {/* for REGULAR USER */}

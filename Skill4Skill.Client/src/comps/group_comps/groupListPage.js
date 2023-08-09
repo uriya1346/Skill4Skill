@@ -55,7 +55,7 @@ function GroupsListPage(props) {
           }} className='btn btn-outline-light me-3 py-1 my-3'><i className="fa fa-chevron-left" aria-hidden="true"></i>
           </button>
           {amount>6 ?
-            <PageLinks perPage="6" apiUrlAmount={API_URL + "/group/amount?cat=" + shortId} urlLinkTo={"/group/" + params.cat_url} clsCss="btn btn-outline-light mx-2 px-md-5" />
+            <PageLinks perPage="6" apiUrlAmount={API_URL + "/group/amount?cat=" + shortId} urlLinkTo={"/group/" + params.cat_url} clsCss="btn btn-outline-dark mx-2 px-md-3"/>
           :""}
         </div>
       </div>

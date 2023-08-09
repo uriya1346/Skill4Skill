@@ -7,7 +7,7 @@ import { AppContext } from "../../context/shopContext";
 import "./../css/client.css";
 import "./../css/headerFooter.css";
 import { useEffect } from "react";
-import { checkTokenLocal } from "../../services/localService";
+import { SHOP_TOKEN, checkTokenLocal } from "../../services/localService";
 
 function LayoutClient(props) {
   const [showCart, setShowCart] = useState("none");
@@ -17,7 +17,7 @@ function LayoutClient(props) {
 
   useEffect(() => {
     setLogin(checkTokenLocal());
-  },[]);
+  },[localStorage[SHOP_TOKEN]]);
 
   useEffect(() => {
     if (location.pathname.includes("barterMap") || location.pathname.includes("chat")) {
@@ -35,7 +35,7 @@ function LayoutClient(props) {
         setShowCart,
       }}
     >
-      {login ? <Cart /> : ""}
+      {login && <Cart />}
       <ClientHeader />
       <Outlet />
       {!hideFooter && <ClientFooter />}
