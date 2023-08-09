@@ -1,16 +1,16 @@
 const express = require("express");
 const jwt= require("jsonwebtoken");
-const { secret } = require("../config/config");
 const { auth, authAdmin } = require("../middlewares/auth");
 const { messageModel, validateMessage } = require("../models/messageModel");
 const { UserModel } = require("../models/userModel");
 const router = express.Router();
+require("dotenv").config();
 
 
 // bring all the users i had chat with them
 router.get("/MyChat", async (req, res) => {
     let token = req.header("x-api-key");
-    let decode= jwt.verify(token,secret.jwtSecret);
+    let decode= jwt.verify(token,process.env.JWT_SECRET);
     req.userToken=decode;
     let id_user = req.userToken.id
     console.log(id_user);

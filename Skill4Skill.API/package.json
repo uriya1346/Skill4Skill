@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "build": "npm i"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,7 @@
     "all": "0.0.0",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1",
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",

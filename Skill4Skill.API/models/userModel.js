@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken")
-const {secret} = require("../config/config")
+require("dotenv").config();
 
 const userSchema = new mongoose.Schema({
   first_name:String,
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
 exports.UserModel = mongoose.model("users", userSchema);
 
 exports.genToken = (_userId,_role) => {
-  let token = jwt.sign({_id:_userId,role:_role}, secret.jwtSecret,{expiresIn:"3d"});
+  let token = jwt.sign({_id:_userId,role:_role}, process.env.JWT_SECRET,{expiresIn:"3d"});
   return token;
 }
 

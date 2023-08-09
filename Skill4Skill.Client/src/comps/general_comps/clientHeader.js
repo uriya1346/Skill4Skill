@@ -47,13 +47,13 @@ function ClientHeader(props) {
                 ></i>
                 Home
               </Link>
-              <Link onClick={() => setOpen(false)} to="/groupCat">
+              {/* <Link onClick={() => setOpen(false)} to="/groupCat">
                 <i
                   className="fa fa-first-order me-2 d-block text-center"
                   aria-hidden="true"
                 ></i>
                 Syllabus
-              </Link>
+              </Link> */}
               <Link onClick={() => setOpen(false)} to="/barter">
                 <i
                   className="fa fa-american-sign-language-interpreting me-2 d-block text-center"

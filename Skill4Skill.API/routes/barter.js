@@ -1,9 +1,9 @@
 const express = require("express");
 const { UserModel } = require("../models/userModel");
 const { auth } = require("../middlewares/auth");
-const { secret } = require("../config/config");
 const router = express.Router();
 const axios = require("axios");
+require("dotenv").config();
 
 router.get("/", auth, async (req, res) => {
   try {
@@ -56,7 +56,7 @@ router.get("/", auth, async (req, res) => {
 });
 router.get("/suggestions", auth, async (req, res) => {
   try {
-    /*
+    
     // Fetch my user
     let myUser = await UserModel.findOne(
       { _id: req.tokenData._id },
@@ -102,37 +102,37 @@ router.get("/suggestions", auth, async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${secret.openAiapiKey}`,
+          Authorization: `Bearer ${process.env.OPEN_API_KEY}`,
           "Content-Type": "application/json",
         },
       }
     );
     console.log(response.data.choices[0].message.content);
     res.json(JSON.parse(response.data.choices[0].message.content))
-    */
-     let json = [
-  {
-    "id": "643c1b5f71ecffea9a453ca4",
-    "match": "Working with JSON in PHP -> Go for Blockchain Development",
-    "reason": "Both involve working with data in different programming languages"
-  },
-  {
-    "id": "643d4f7a656c723d33f34b68",
-    "match": "Working with JSON in PHP -> Go for Blockchain Development",
-    "reason": "Both involve working with data in different programming languages"
-  },
-  {
-    "id": "643d4ff9656c723d33f34b80",
-    "match": "Working with JSON in PHP -> Go for Blockchain Development",
-    "reason": "Both involve working with data in different programming languages"
-  },
-  {
-    "id": "643ffee3e92058eb94acc7b2",
-    "match": "Working with JSON in PHP -> Go for Blockchain Development",
-    "reason": "Both involve working with data in different programming languages"
-  }
-]
-    res.json(json);
+    
+//      let json = [
+//   {
+//     "id": "643c1b5f71ecffea9a453ca4",
+//     "match": "Working with JSON in PHP -> Go for Blockchain Development",
+//     "reason": "Both involve working with data in different programming languages"
+//   },
+//   {
+//     "id": "643d4f7a656c723d33f34b68",
+//     "match": "Working with JSON in PHP -> Go for Blockchain Development",
+//     "reason": "Both involve working with data in different programming languages"
+//   },
+//   {
+//     "id": "643d4ff9656c723d33f34b80",
+//     "match": "Working with JSON in PHP -> Go for Blockchain Development",
+//     "reason": "Both involve working with data in different programming languages"
+//   },
+//   {
+//     "id": "643ffee3e92058eb94acc7b2",
+//     "match": "Working with JSON in PHP -> Go for Blockchain Development",
+//     "reason": "Both involve working with data in different programming languages"
+//   }
+// ]
+    // res.json(json);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

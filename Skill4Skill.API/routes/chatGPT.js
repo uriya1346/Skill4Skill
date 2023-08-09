@@ -1,71 +1,66 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-const { secret } = require("../config/config");
+require("dotenv").config();
 
 router.post("/chat", async (req, res) => {
   try {
-    //  const message = req.body.message;
+     const message = req.body.message;
 
-    // const response = await axios.post(
-    //   "https://api.openai.com/v1/chat/completions",
-    //   {
-    //     messages: [
-    //       {
-    //         role: "user",
-    //         content: message,
-    //       },
-    //     ],
-    //     model: "gpt-3.5-turbo",
-    //   },
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${secret.openAiapiKey}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // console.log("$$$");
-
-    // res.json(JSON.parse(response.data.choices[0].message.content));
-  setTimeout(() => {
-  res.json({questions:[
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
       {
-        question: "What is the purpose of Java Streams?",
-        options: [
-          "To read and write data to files",
-          "To manipulate collections of objects",
-          "To create graphics and animations",
+        messages: [
+          {
+            role: "user",
+            content: message,
+          },
         ],
-        answer: "To manipulate collections of objects",
+        model: "gpt-3.5-turbo",
       },
       {
-        question: "What is a terminal operation in Java Streams?",
-        options: [
-          "An operation that returns a new Stream",
-          "An operation that performs a computation and produces a result",
-          "An operation that filters elements from the Stream",
-        ],
-        answer:
-          "An operation that performs a computation and produces a result",
-      },
-      {
-        question:
-          "What is the difference between parallel and sequential Streams in Java?",
-        options: [
-          "Sequential Streams process elements in random order",
-          "Parallel Streams process elements in a single thread",
-          "Parallel Streams divide elements into multiple threads for processing",
-        ],
-        answer:
-          "Parallel Streams divide elements into multiple threads for processing",
-      },
-    ],
-  });
-}, 1500);
-  
-
-
+        headers: {
+          Authorization: `Bearer ${process.env.OPEN_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    res.json(JSON.parse(response.data.choices[0].message.content));
+//   setTimeout(() => {
+//   res.json({questions:[
+//       {
+//         question: "What is the purpose of Java Streams?",
+//         options: [
+//           "To read and write data to files",
+//           "To manipulate collections of objects",
+//           "To create graphics and animations",
+//         ],
+//         answer: "To manipulate collections of objects",
+//       },
+//       {
+//         question: "What is a terminal operation in Java Streams?",
+//         options: [
+//           "An operation that returns a new Stream",
+//           "An operation that performs a computation and produces a result",
+//           "An operation that filters elements from the Stream",
+//         ],
+//         answer:
+//           "An operation that performs a computation and produces a result",
+//       },
+//       {
+//         question:
+//           "What is the difference between parallel and sequential Streams in Java?",
+//         options: [
+//           "Sequential Streams process elements in random order",
+//           "Parallel Streams process elements in a single thread",
+//           "Parallel Streams divide elements into multiple threads for processing",
+//         ],
+//         answer:
+//           "Parallel Streams divide elements into multiple threads for processing",
+//       },
+//     ],
+//   });
+// }, 1500);
   } catch (error) {
     console.error(error); // log the error to the console for debugging
     let errorMessage = "Error with the chat request";
@@ -77,30 +72,41 @@ router.post("/chat", async (req, res) => {
   }
 });
 
-// router.post("/chat/ways", async (req, res) => {
-//   try {
-    // const message = req.body.message;
-    // const response = await axios.post(
-    //   "https://api.openai.com/v1/chat/completions",
-    //   {
-    //     messages: [
-    //       {
-    //           "role": "user",
-    //           "content":message
-    //       }
-    //   ],
-    //     model:"gpt-3.5-turbo"
-    //   },
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${secret.openAiapiKey}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // console.log("$$$");
+router.post("/chat/ways", async (req, res) => {
+  try {
+    const message = req.body.message;
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        messages: [
+          {
+              "role": "user",
+              "content":message
+          }
+      ],
+        model:"gpt-3.5-turbo"
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPEN_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("$$$");
 
-    // res.json(JSON.parse(response.data.choices[0].message.content));
+    res.json(JSON.parse(response.data.choices[0].message.content));
+  } catch (error) {
+    console.error(error); // log the error to the console for debugging
+    let errorMessage = "Error with the chat request";
+    if (error.response && error.response.data && error.response.data.error) {
+      errorMessage = error.response.data.error.message;
+    }
+
+    res.status(500).json({ error: errorMessage });
+  }
+});
+
 //     let json = {
 //       ways: [
 //         {

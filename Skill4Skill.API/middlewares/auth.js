@@ -1,6 +1,6 @@
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
-const { secret } = require("../config/config");
+require("dotenv").config();
 
 exports.auth = (req,res,next) => {
   let token = req.header("x-api-key");
@@ -8,7 +8,7 @@ exports.auth = (req,res,next) => {
     return res.status(401).json({err:"You must send token in header to this endpoint"})
   }
   try{
-    let decodeToken = jwt.verify(token, secret.jwtSecret);
+    let decodeToken = jwt.verify(token, process.env.JWT_SECRET);
     req.tokenData = decodeToken;
     next();
   }
@@ -22,7 +22,7 @@ exports.authAdmin = (req,res,next) => {
     return res.status(401).json({err:"You must send token in header to this endpoint"})
   }
   try{
-    let decodeToken = jwt.verify(token, secret.jwtSecret);
+    let decodeToken = jwt.verify(token, process.env.JWT_SECRET);
     if(decodeToken.role == "admin"){
       req.tokenData = decodeToken;
       next();
