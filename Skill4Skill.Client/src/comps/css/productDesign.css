@@ -147,7 +147,7 @@
 
 .card-product{
   position: absolute;
-  left: 40%;
+  left:0;
   top: 3.5%;
   z-index: 99;
 

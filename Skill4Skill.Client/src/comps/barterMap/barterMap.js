@@ -207,7 +207,7 @@ function BarterMap(props) {
                     setAlreadyConnect(connectFlag);
                   }}
                 >
-                  <img src={item.img} alt="User Icon" />
+                  <img src={item.img} alt="User Icon" style={{borderRadius:"100%"}}/>
                 </button>
               </Marker>
             );

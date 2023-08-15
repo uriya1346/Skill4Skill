@@ -7,7 +7,8 @@ const Thumbnail = () => {
         <p className={styles.illustrations}>
           <span className={styles.illustrations1}>
             <span className={styles.span}>{` `}</span>
-            <span className={styles.illustrations2}>School</span>
+            <span className={styles.illustrations2}>World</span>
+            {/* <p>Where Teams Grow Together</p> */}
           </span>
         </p>
       </b>

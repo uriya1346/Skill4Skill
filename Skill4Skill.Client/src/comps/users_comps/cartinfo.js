@@ -11,7 +11,6 @@ function Cart(props) {
   const confirmUser = async (id) => { 
     let url = API_URL + "/users/confirmUser/"+id;
     let resp = await doApiGet(url);
-    console.log(resp.data);
     if (resp.data.modifiedCount) {
       toast.success("User connect successfully");
       setShowCart("none")

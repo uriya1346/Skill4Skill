@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API_URL = "http://localhost:3002";
-// export const API_URL = "https://carservise.herokuapp.com";
+//  export const API_URL = "https://skill4skill.onrender.com";
 
 export const doApiGet = async (_url) => {
   try {

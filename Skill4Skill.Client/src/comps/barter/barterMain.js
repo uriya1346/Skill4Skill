@@ -6,7 +6,6 @@ import Suggestions from "./suggestions";
 import { Link } from "react-router-dom";
 import AuthClientComp from "../users_comps/authClientComp";
 import { PopupContext } from "../../context/shopContext";
-import styles from "../css/Thumbnail.module.css";
 
 function BarterMain(props) {
   const [ar, setAr] = useState([]);
@@ -53,9 +52,9 @@ function BarterMain(props) {
     setAr(array);
     let url2 = API_URL + "/barter/suggestions";
     let resp2 = await doApiGet(url2);
-    let suggestions = resp2.data;
+    let suggestions = resp2.data;    
     suggestions = suggestions.filter((suggestion) => {
-      return !resp.data.some((item) => item.userId === suggestion.id);
+      return !resp.data.some((item) => item.userId === suggestion._id);
     });
 
     setSuggestionsAr(suggestions);
@@ -66,18 +65,6 @@ function BarterMain(props) {
     <PopupContext.Provider value={{ activePopup, setActivePopup }}>
       <div className="barter-main-container">
         <AuthClientComp />
-        {/* <div className={styles.toshjmoshAStunning3dCartooParent}>
-          <img
-            className={styles.toshjmoshAStunning3dCartooIcon}
-            alt=""
-            src="images/avatar/three.png"
-          />
-          <img
-            className={styles.toshjmoshAStunning3dCartooIcon1}
-            alt=""
-            src="images/avatar/four.png"
-          />
-        </div> */}
         <div className="container categories-list py-5">
           {ar.length > 0 && (
             <div>
@@ -113,7 +100,7 @@ function BarterMain(props) {
                     <Suggestions
                       key={index}
                       item={item}
-                      index={item.id + "sug"}
+                      index={item._id + "sug"}
                     />
                   ))}
                 </div>

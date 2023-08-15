@@ -75,10 +75,8 @@ function ListMessage() {
     const url = `${API_URL}/chat/${id}`;
     const body = { Message: text };
     try {
-      setLoading(true);
       const { data } = await doApiMethod(url, "POST", body);
       socket.emit("FromAPI", data.message);
-      setLoading(false);
     } catch (error) {
       alert("Error, please try again later.");
       console.log(error);
@@ -117,9 +115,8 @@ function ListMessage() {
   }, []);
 
   return (
-    <div className="">
       <div className="listMessage p-2" style={{ display: "flex" }}>
-        <div className="messageitem p-2 my-4 pb-4">
+        {userObj && <div className="messageitem p-2 my-4 pb-4">
           <button
             onClick={() => {
               setLoading(false);
@@ -146,7 +143,7 @@ function ListMessage() {
                   {id === item.sender_id ? (
                     <div className="float-end messageChat_item mt-3">
                       <span className="fw-bolder">
-                        {userObj[item.sender_id].toUpperCase()}
+                        {userObj[item.sender_id]?.toUpperCase()}
                       </span>
                       <br />
                       <span>{item.Message}</span>
@@ -157,7 +154,7 @@ function ListMessage() {
                   ) : (
                     <div className="float-start messageChat_item mt-3">
                       <span className="fw-bolder">
-                        {userObj[item.sender_id].toUpperCase()}
+                        {userObj[item.sender_id]?.toUpperCase()}
                       </span>
                       <br />
                       <span>{item.Message}</span>
@@ -191,9 +188,8 @@ function ListMessage() {
               placeholder="Type a message"
             />
           </div>
-        </div>
+        </div>}
       </div>
-    </div>
   );
 }
 

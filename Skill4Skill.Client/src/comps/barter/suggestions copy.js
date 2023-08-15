@@ -28,19 +28,15 @@ function Suggestions(props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const doApi = async () => {
-    let url = API_URL + "/users/single/" + item._id;
+    let url = API_URL + "/users/single/" + item.id;
     let resp = await doApiGet(url);
-    resp.data.match = item.knowledge;
+    resp.data.match = item.match;
+    resp.data.reason = item.reason;
     let sumRating = 0;
     resp.data.reviews.forEach((review) => {
       sumRating += review.raiting;
     });
     setRaitingAvg(sumRating / resp.data.reviews.length);
-    for (let i = 0; i < item.knowledge.length; i++) {
-      let urlCat = API_URL + "/categoriesGroup/singleNumber/" + item.knowledge[i].catNum;
-      let respCat = await doApiGet(urlCat);
-      resp.data.match[i].catName = respCat.data.name
-    }
     setUser(resp.data);
     let url2 = API_URL + "/users/myInfo";
     let resp2 = await doApiGet(url2);
@@ -54,13 +50,13 @@ function Suggestions(props) {
     let resp = await doApiGet(url);
     let userConnect = resp.data;
     userConnect.requests.forEach((element) => {
-      if (element.id === myUser._id) {
+      if (element.id === user._id) {
         toast.warn("You're already send a connection to this user");
         flag = false;
       }
     });
     userConnect.connections.forEach((element) => {
-      if (element.id === myUser._id) {
+      if (element.id === user._id) {
         toast.warn("You're already connected to this user");
         flag = false;
       }
@@ -68,16 +64,16 @@ function Suggestions(props) {
     //add connect to this user
     if (!flag) return;
     if (
-      myUser.connections.length > 2 &&
-      myUser.role !== "admin" &&
-      myUser.role !== "premium"
+      user.connections.length > 2 &&
+      user.role !== "admin" &&
+      user.role !== "premium"
     ) {
       toast.warning("you need to get a premium user to send more connections");
       nav("/checkoutPremium");
       return;
     }
     let obj = {};
-    obj.id = myUser._id;
+    obj.id = user._id;
     obj.date = new Date();
     userConnect.requests.push(obj);
     let url2 = API_URL + "/users/" + id;
@@ -121,7 +117,7 @@ function Suggestions(props) {
           onClick={async (e) => {
             e.preventDefault();
             let connectFlag = await checkIfAlreadyConnect(user._id);
-            setAlreadyConnect(connectFlag);            
+            setAlreadyConnect(connectFlag);
             setActivePopup(props.index); 
           }}
         >
@@ -139,7 +135,7 @@ function Suggestions(props) {
             <h4 className="fire-color">
               {user.first_name} {user.last_name}
             </h4>
-            {/* <p className="card-text text-center">Match: {user.match}</p> */}
+            <p className="card-text text-center">Match: {user.match}</p>
           </div>
         </motion.div>
         {activePopup === props.index ? (
@@ -167,10 +163,13 @@ function Suggestions(props) {
                   <Rating value={raitingAvg} precision={1} readOnly />
                 </Typography>
                 <Typography variant="body2" component="div">
-                  {user.match.map((item, index) => (
-                    <p key={index}><strong>{item.catName}: </strong>{item.subCat}</p>
-                  ))}
-                </Typography> 
+                  <strong>Match: </strong>
+                  {user.match}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  <strong>Reason: </strong>
+                  {user.reason}
+                </Typography>
                 <div className="text-center mt-3">
                   {alreadyConnect ? (
                     <button

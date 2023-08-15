@@ -29,7 +29,7 @@ function BarterCardInfo(props) {
     doApi();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const doApi = async () => {
+  const doApi = async () => { 
     let obj = {};
     if (item.catNum.includes(",")) {
       const arrStr = item.catNum.split(",");
@@ -145,7 +145,7 @@ function BarterCardInfo(props) {
     return flag;
   };
   return (
-    <div className="product-item col-md-4 p-3">
+    <div className="product-item col-md-3 p-3" style={{borderRadius:"30px"}}>
       <motion.div
         className="card shadow text-center h-100"
         whileHover={{ scale: 1.1 }}
@@ -154,6 +154,7 @@ function BarterCardInfo(props) {
           cursor: "pointer",
           perspective: "1500px",
           backgroundColor: "#FDF5E6",
+          borderRadius:"20px"
         }}
         onClick={async (e) => {
           e.preventDefault();
@@ -168,6 +169,7 @@ function BarterCardInfo(props) {
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "200px",
+            borderRadius:"20px"
           }}
           className="product-img"
         ></div>
@@ -181,12 +183,12 @@ function BarterCardInfo(props) {
       {activePopup === props.index ? (
         <motion.div
           className="card-product"
-          animate={{ x: [0, 100, 0] }}
+          animate={{ y: [0, 50, 35]}}
+          transition={{ duration: 0.4 }}
         >
           <Card
             sx={{
               minWidth: 250,
-              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             }}
           >
             <CardMedia
@@ -202,9 +204,9 @@ function BarterCardInfo(props) {
               <Typography gutterBottom variant="" component="div">
                 <Rating value={raitingAvg} precision={1} readOnly />
               </Typography>
-              <Typography gutterBottom variant="" component="div">
+              {/* <Typography gutterBottom variant="" component="div">
                 <strong>Connections:</strong> {user.connections.length}
-              </Typography>
+              </Typography> */}
               <Typography gutterBottom variant="" component="div">
                 <strong>Teaching Categories:</strong> {catInfo.name}
               </Typography>
